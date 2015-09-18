@@ -1,0 +1,21 @@
+{
+  "name": "rakusuke",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "~4.0.0-alpha",
+    "angular": "~1.4.5",
+    "angular-new-router": "~0.5.3",
+    "angular-resource": "~1.4.5"
+  },
+  "overrides": {
+    "angular-new-router": {
+      "main": "dist/router.es5.js"
+    },
+    "bootstrap": {
+      "main": "dist/css/bootstrap.css"
+    }
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.4.5"
+  }
+}

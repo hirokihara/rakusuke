@@ -1,0 +1,12 @@
+home.
+<div>
+　　<input type="text" size="10" ng-model="home.user" placeholder="ユーザー名"><br/>
+　　<input type="text" size="30" ng-model="home.msg" placeholder="メッセージを入力">
+　　<button name="button" ng-click="home.sendMes()">送信</button>
+　　<ul ng-repeat="msgbox in home.msgBoxes">
+　　　<li>
+　　　　{{msgbox.value.name}}: {{msgbox.value.text}}
+　　　　<button ng-click="home.deleteMes($index)">削除</button>
+　　　</li>
+　　</ul>
+</div>
