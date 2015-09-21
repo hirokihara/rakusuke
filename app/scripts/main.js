@@ -10,6 +10,9 @@
     .module('rakusuke', [
       'ngNewRouter',
       'rakusuke.config',
+      'ui.bootstrap',
+      'ngTouch',
+      'angular-momentjs',
       'rakusuke.components.home',
       'rakusuke.components.about',
       'rakusuke.components.contact'

@@ -1,0 +1,32 @@
+.btn-sm {
+    padding: 2px 11.5px;
+    font-size: 18px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+
+.btn-default.disabled, .btn-default[disabled], fieldset[disabled] .btn-default, .btn-default.disabled:hover, .btn-default[disabled]:hover, fieldset[disabled] .btn-default:hover, .btn-default.disabled:focus, .btn-default[disabled]:focus, fieldset[disabled] .btn-default:focus, .btn-default.disabled:active, .btn-default[disabled]:active, fieldset[disabled] .btn-default:active, .btn-default.disabled.active, .btn-default[disabled].active, fieldset[disabled] .btn-default.active {
+    background-color: #CCE0FF;
+    border-color: #CCE0FF;
+}
+
+.well {
+	background-color: #CCE0FF;
+}
+
+.btn-default:hover {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+.full button span {
+	background-color: limegreen;
+	border-radius: 32px;
+	color: black;
+}
+.partially button span {
+	background-color: orange;
+	border-radius: 32px;
+	color: black;
+}

@@ -1,5 +1,14 @@
-home.
+
+<!-- create new events -->
 <div>
+    <pre>Selected date is: <em>{{home.dt | date:'fullDate' }}</em></pre>
+    <div style="display:inline-block; min-height:290px;">
+      <datepicker ng-model="home.dt" min-date="home.minDate" max-date="home.maxDate" show-weeks="false" class="well well-sm" custom-class="home.getDayClass(date, mode)" format-day-title="yyyy年 MM月" ng-click="home.addDate(home.dt)"></datepicker>
+    </div>
+    <textarea ng-model="home.schedule" class="form-control" rows="5"></textarea>
+</div>
+
+<!-- <div>
 　　<input type="text" size="10" ng-model="home.user" placeholder="ユーザー名"><br/>
 　　<input type="text" size="30" ng-model="home.msg" placeholder="メッセージを入力">
 　　<button name="button" ng-click="home.sendMes()">送信</button>
@@ -9,4 +18,26 @@ home.
 　　　　<button ng-click="home.deleteMes($index)">削除</button>
 　　　</li>
 　　</ul>
+</div> -->
+
+<br>
+<div>
+<form class="form-horizontal">
+  <div class="form-group">
+    <label for="inputEvent" class="col-sm-2 control-label">イベント名</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="inputEvent" placeholder="イベント名">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputDescription" class="col-sm-2 control-label">イベント概要</label>
+    <div class="col-sm-10">
+      <textarea ng-model="home.description" class="form-control"  id="inputDescription" rows="5"></textarea>
+    </div>
+  </div>
+</form>
 </div>
+<button type="submit" class="btn btn-primary btn-lg btn-block">決定</button>
+<br>
+
+

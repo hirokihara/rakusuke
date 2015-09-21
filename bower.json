@@ -2,10 +2,13 @@
   "name": "rakusuke",
   "private": true,
   "dependencies": {
-    "bootstrap": "~4.0.0-alpha",
     "angular": "~1.4.5",
+    "angular-bootstrap": "~0.13.4",
+    "angular-momentjs": "~0.2.2",
     "angular-new-router": "~0.5.3",
-    "angular-resource": "~1.4.5"
+    "angular-resource": "~1.4.5",
+    "angular-touch": "~1.4.6",
+    "bootstrap": "~3"
   },
   "overrides": {
     "angular-new-router": {
