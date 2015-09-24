@@ -91,5 +91,9 @@
     vm.schedule = vm.schedule + vm.$moment (date).format('YYYY年MM月DD日 19:00〜') + '\n';
   };
 
+  HomeController.prototype.createEvent = function() {
+
+  };
+
   var vm;
 })();
