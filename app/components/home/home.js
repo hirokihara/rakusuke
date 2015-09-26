@@ -7,10 +7,10 @@
   'use strict';
 
   angular
-    .module('rakusuke.components.home', [])
+    .module('rakusuke.components.home', ['rakusuke.service.event'])
     .controller('HomeController', HomeController);
 
-  HomeController.$inject = ['$moment'];
+  HomeController.$inject = ['$moment', 'EventService'];
 
   /**
    * HomeController
@@ -18,16 +18,22 @@
    * @class HomeController
    * @constructor
    */
-  function HomeController($moment) {
+  function HomeController($moment, EventService) {
     console.log('HomeController Constructor');
     this.$moment = $moment;
+    this.EventService = EventService;
   }
 
-  function readMes() {
-    vm.ds.stream().next(function(err, data) {
-      vm.msgBoxes = data;
-      // vm.$apply();
-    });
+  function read() {
+    console.log('HomeController read Method');
+    var msgs = vm.EventService.read();
+    msgs
+      .then(function (data) {
+        vm.msgBoxes = data;
+      })
+      .catch(function (e) {
+        console.log(e);
+      });
   }
   /**
    * The controller activate makes it convenient to re-use the logic
@@ -38,11 +44,9 @@
   HomeController.prototype.activate = function() {
     console.log('HomeController activate Method');
     vm = this;
-    var milkcocoa = new MilkCocoa('postiecel9pz.mlkcca.com');
-    vm.ds = milkcocoa.dataStore('ng-test');
-    vm.ds.on('push', function(event) {
-      readMes();
-    });
+
+    read();
+    vm.EventService.onPush(read);
 
     // initialize datepicker
     vm.dt = new Date();
@@ -69,7 +73,7 @@
 
   HomeController.prototype.sendMes = function() {
     console.log('HomeController activate sendMes');
-    vm.ds.push({name: vm.user, text: vm.msg});
+    vm.EventService.push({name: vm.user, text: vm.msg});
   };
 
   HomeController.prototype.getDayClass = function(date, mode) {
