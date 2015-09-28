@@ -29,7 +29,7 @@
      * @default "foo"
      */
     var milkcocoa = new MilkCocoa('postiecel9pz.mlkcca.com');
-    var ds = milkcocoa.dataStore('ng-test');
+    var ds = milkcocoa.dataStore('main');
 
     var eventdataService = {
       read: function() {
@@ -39,9 +39,9 @@
         });
         return d.promise;
       },
-      onPush: function(fnc) {
+      on: function(event, fnc) {
         if (ds) {
-          ds.on('push', function(event) {
+          ds.on(event, function(event) {
             fnc();
           });
           return true;
@@ -50,7 +50,11 @@
         }
       },
       push: function(data) {
-        ds.push(data);
+        var d = $q.defer();
+        ds.push(data, function(err, datum) {
+          d.resolve(datum);
+        });
+        return d.promise;
       }
     };
 

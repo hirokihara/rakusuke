@@ -1,4 +1,4 @@
-<section id="block1">
+<section id="block1" ng-hide="home.id">
   <div id="eventCreationForm">
     <form class="form-horizontal">
       <div class="row">
@@ -64,4 +64,13 @@
       <button type="submit" class="btn btn-primary btn-lg col-sm-2 col-sm-offset-5 col-xs-12" ng-click="home.submit()">決定</button>
     </div>
   </div>
+</section>
+
+<section id="block2" ng-show="home.creationSuccess">
+イベントを作成しました。下記URLへアクセスしてください。
+  <a href="http://localhost:3000/home/:{{home.id}}">http://localhost:3000/home/:{{home.id}}</a>
+</section>
+
+<section id="block3" ng-show="home.scheduleMode">
+スケジュール入力：{{home.id}}
 </section>

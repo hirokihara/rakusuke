@@ -25,8 +25,8 @@
 
   function read() {
     console.log('HomeController read Method');
-    var msgs = vm.EventdataService.read();
-    msgs
+    var promise = vm.EventdataService.read();
+    promise
       .then(function (data) {
         vm.eventdata = data;
       })
@@ -44,7 +44,7 @@
     console.log('EventlistController activate Method');
     vm = this;
     read();
-    vm.EventdataService.onPush(read);
+    vm.EventdataService.on('push', read);
   };
 
   EventlistController.prototype.sendMes = function() {

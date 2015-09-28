@@ -4,7 +4,7 @@
 　　<button name="button" ng-click="eventlist.sendMes()">送信</button>
 　　<ul ng-repeat="data in eventlist.eventdata">
 　　　<li>
-　　　　{{data.value.eventname}}: {{data.value.description}}
+　　　　{{data.id}}: {{data.value.eventname}}: {{data.value.description}}
 　　　　<button ng-click="eventlist.deleteMes($index)">削除</button>
 　　　</li>
 　　</ul>

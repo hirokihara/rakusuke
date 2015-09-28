@@ -10,7 +10,7 @@
     .module('rakusuke.components.home', ['rakusuke.service.eventdata'])
     .controller('HomeController', HomeController);
 
-  HomeController.$inject = ['$moment', 'EventdataService'];
+  HomeController.$inject = ['$routeParams', '$moment', 'EventdataService'];
 
   /**
    * HomeController
@@ -18,16 +18,18 @@
    * @class HomeController
    * @constructor
    */
-  function HomeController($moment, EventdataService) {
+  function HomeController($routeParams, $moment, EventdataService) {
     console.log('HomeController Constructor');
+    this.id = $routeParams.id;
     this.$moment = $moment;
     this.EventdataService = EventdataService;
+    console.log('routeParams.id:', this.id);
   }
 
   function read() {
     console.log('HomeController read Method');
-    var msgs = vm.EventdataService.read();
-    msgs
+    var promise = vm.EventdataService.read();
+    promise
       .then(function (data) {
         vm.msgBoxes = data;
       })
@@ -44,6 +46,9 @@
   HomeController.prototype.activate = function() {
     console.log('HomeController activate Method');
     vm = this;
+    vm.creationSuccess = false;
+    vm.scheduleMode = false;
+    vm.choicess = "◯\n△\n×";
 
     // read();
     // vm.EventdataService.onPush(read);
@@ -69,6 +74,10 @@
     vm.maxDate = new Date(2020, 5, 22);
 
     vm.schedule = '';
+
+    if (vm.id) {
+      vm.scheduleMode = true;
+    }
   };
 
   HomeController.prototype.sendMes = function() {
@@ -97,7 +106,16 @@
 
   HomeController.prototype.submit = function() {
     console.log('HomeController activate sendMes');
-    vm.EventdataService.push({eventname: vm.eventname, description: vm.description, schdule: vm.schedule});
+    var promise = vm.EventdataService.push({eventname: vm.eventname, description: vm.description, choicess: vm.choicess, schedule: vm.schedule});
+    promise
+      .then(function (datum) {
+        console.log('datum.id:', datum.id);
+        vm.id = datum.id;
+        vm.creationSuccess = true;
+      })
+      .catch(function (e) {
+        console.log(e);
+      });
   };
 
   var vm;
