@@ -28,7 +28,7 @@
     var msgs = vm.EventdataService.read();
     msgs
       .then(function (data) {
-        vm.msgBoxes = data;
+        vm.eventdata = data;
       })
       .catch(function (e) {
         console.log(e);

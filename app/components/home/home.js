@@ -45,11 +45,11 @@
     console.log('HomeController activate Method');
     vm = this;
 
-    read();
-    vm.EventdataService.onPush(read);
+    // read();
+    // vm.EventdataService.onPush(read);
 
     // initialize datepicker
-    vm.dt = new Date();
+    vm.datepicker = new Date();
     vm.minDate = this.minDate ? null : new Date();
     var tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
@@ -95,8 +95,9 @@
     vm.schedule = vm.schedule + vm.$moment (date).format('YYYY年MM月DD日 19:00〜') + '\n';
   };
 
-  HomeController.prototype.createEvent = function() {
-
+  HomeController.prototype.submit = function() {
+    console.log('HomeController activate sendMes');
+    vm.EventdataService.push({eventname: vm.eventname, description: vm.description, schdule: vm.schedule});
   };
 
   var vm;

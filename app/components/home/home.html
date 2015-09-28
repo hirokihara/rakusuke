@@ -16,7 +16,7 @@
                       <label for="inputEvent" class="control-label custom-label1">日にち候補</label>
                     </div>
                     <div style="display:inline-block; min-height:290px;">
-                      <datepicker id="datePicker" ng-model="home.dt" min-date="home.minDate" max-date="home.maxDate" show-weeks="false" class="well well-sm" custom-class="home.getDayClass(date, mode)" format-day-title="yyyy年 MM月" ng-click="home.addDate(home.dt)"></datepicker>
+                      <datepicker id="datePicker" ng-model="home.datepicker" min-date="home.minDate" max-date="home.maxDate" show-weeks="false" class="well well-sm" custom-class="home.getDayClass(date, mode)" format-day-title="yyyy年 MM月" ng-click="home.addDate(home.datepicker)"></datepicker>
                     </div>
                     <textarea ng-model="home.schedule" class="form-control visible-sm visible-xs" rows="5"></textarea>
                   </div>
@@ -43,7 +43,7 @@
                 ※◯◯さんの歓迎会など<br>
               </div>
               <div>
-                <input type="text" class="form-control" id="inputEvent" placeholder="イベント名" required>
+                <input type="text" ng-model="home.eventname" class="form-control" id="inputEvent" placeholder="イベント名" required>
               </div>
             </div>
             <div class="form-group">
@@ -61,7 +61,7 @@
       </div>
     </form>
     <div class="center-block">
-      <button type="submit" class="btn btn-primary btn-lg col-sm-2 col-sm-offset-5 col-xs-12" ng-click="home.createEvent()">決定</button>
+      <button type="submit" class="btn btn-primary btn-lg col-sm-2 col-sm-offset-5 col-xs-12" ng-click="home.submit()">決定</button>
     </div>
   </div>
 </section>
