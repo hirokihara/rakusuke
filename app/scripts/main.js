@@ -15,7 +15,8 @@
       'angular-momentjs',
       'rakusuke.components.home',
       'rakusuke.components.about',
-      'rakusuke.components.contact'
+      'rakusuke.components.contact',
+      'rakusuke.components.eventlist'
     ])
     .controller('AppController', AppController);
 
@@ -23,7 +24,8 @@
     {path: '/',       redirectTo: '/home'},
     {path: '/home',    component: 'home'},
     {path: '/about',   component: 'about'},
-    {path: '/contact', component: 'contact'}
+    {path: '/contact', component: 'contact'},
+    {path: '/eventlist', component: 'eventlist'}
   ];
 
   AppController.$inject = [];
