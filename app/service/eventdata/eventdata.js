@@ -1,25 +1,25 @@
 /**
- * Event Service module.
+ * Eventdata Service module.
  *
- * @module rakusuke.service.event
+ * @module rakusuke.service.eventdata
  */
 (function() {
   'use strict';
 
   angular
-    .module('rakusuke.service.event', [])
-    .factory('EventService', EventService);
+    .module('rakusuke.service.eventdata', [])
+    .factory('EventdataService', EventdataService);
 
-  EventService.$inject = ['$q'];
+  EventdataService.$inject = ['$q'];
 
   /**
-   * EventService
+   * EventdataService
    *
-   * @class EventService
+   * @class EventdataService
    * @constructor
    */
-  function EventService($q) {
-    console.log('EventService Constructor');
+  function EventdataService($q) {
+    console.log('EventdataService Constructor');
     /**
      * My property description.  Like other pieces of your comment blocks,
      * this can span multiple lines.
@@ -31,7 +31,7 @@
     var milkcocoa = new MilkCocoa('postiecel9pz.mlkcca.com');
     var ds = milkcocoa.dataStore('ng-test');
 
-    var eventService = {
+    var eventdataService = {
       read: function() {
         var d = $q.defer();
         ds.stream().next(function(err, data) {
@@ -54,7 +54,7 @@
       }
     };
 
-    return eventService;
+    return eventdataService;
   }
 
 })();

@@ -7,10 +7,10 @@
   'use strict';
 
   angular
-    .module('rakusuke.components.home', ['rakusuke.service.event'])
+    .module('rakusuke.components.home', ['rakusuke.service.eventdata'])
     .controller('HomeController', HomeController);
 
-  HomeController.$inject = ['$moment', 'EventService'];
+  HomeController.$inject = ['$moment', 'EventdataService'];
 
   /**
    * HomeController
@@ -18,15 +18,15 @@
    * @class HomeController
    * @constructor
    */
-  function HomeController($moment, EventService) {
+  function HomeController($moment, EventdataService) {
     console.log('HomeController Constructor');
     this.$moment = $moment;
-    this.EventService = EventService;
+    this.EventdataService = EventdataService;
   }
 
   function read() {
     console.log('HomeController read Method');
-    var msgs = vm.EventService.read();
+    var msgs = vm.EventdataService.read();
     msgs
       .then(function (data) {
         vm.msgBoxes = data;
@@ -46,7 +46,7 @@
     vm = this;
 
     read();
-    vm.EventService.onPush(read);
+    vm.EventdataService.onPush(read);
 
     // initialize datepicker
     vm.dt = new Date();
@@ -73,7 +73,7 @@
 
   HomeController.prototype.sendMes = function() {
     console.log('HomeController activate sendMes');
-    vm.EventService.push({name: vm.user, text: vm.msg});
+    vm.EventdataService.push({name: vm.user, text: vm.msg});
   };
 
   HomeController.prototype.getDayClass = function(date, mode) {

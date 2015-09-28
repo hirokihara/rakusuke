@@ -2,10 +2,10 @@
   'use strict';
 
   angular
-    .module('rakusuke.mock.service.event', [])
-    .factory('EventService', EventService);
+    .module('rakusuke.mock.service.eventdata', [])
+    .factory('EventdataService', EventdataService);
 
-  function EventService() {
+  function EventdataService() {
     return {
       some: someSpy
     };
