@@ -48,7 +48,7 @@
     vm = this;
     vm.creationSuccess = false;
     vm.scheduleMode = false;
-    vm.choicess = "◯\n△\n×";
+    vm.choicess = '◯\n△\n×';
 
     // read();
     // vm.EventdataService.onPush(read);
