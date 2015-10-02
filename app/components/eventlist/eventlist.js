@@ -47,7 +47,7 @@
     // vm.EventdataService.on('push', read);
   };
   EventlistController.prototype.remove = function(id) {
-    console.log('EventlistController remove Method id:',id);
+    console.log('EventlistController remove Method id:', id);
     var promise = vm.EventdataService.remove(id);
     promise
       .then(function (datum) {
