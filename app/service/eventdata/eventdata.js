@@ -29,6 +29,8 @@
      * @default "foo"
      */
 
+    ApimainService.setUri('main');
+
     return ApimainService;
   }
 

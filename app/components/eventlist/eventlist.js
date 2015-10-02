@@ -25,7 +25,7 @@
 
   function read() {
     console.log('HomeController read Method');
-    var promise = vm.EventdataService.read();
+    var promise = vm.EventdataService.query();
     promise
       .then(function (data) {
         vm.eventdata = data;
@@ -44,13 +44,23 @@
     console.log('EventlistController activate Method');
     vm = this;
     read();
-    vm.EventdataService.on('push', read);
+    // vm.EventdataService.on('push', read);
   };
-
-  EventlistController.prototype.sendMes = function() {
-    console.log('HomeController activate sendMes');
-    vm.EventdataService.push({name: vm.user, text: vm.msg});
+  EventlistController.prototype.remove = function(id) {
+    console.log('EventlistController remove Method id:',id);
+    var promise = vm.EventdataService.remove(id);
+    promise
+      .then(function (datum) {
+        read();
+      })
+      .catch(function (e) {
+        console.log(e);
+      });
   };
+  // EventlistController.prototype.sendMes = function() {
+  //   console.log('HomeController activate sendMes');
+  //   vm.EventdataService.push({name: vm.user, text: vm.msg});
+  // };
   /**
    * Angular ViewModel
    *

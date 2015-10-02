@@ -28,7 +28,7 @@
 
   function read() {
     console.log('HomeController read Method');
-    var promise = vm.EventdataService.read();
+    var promise = vm.EventdataService.query();
     promise
       .then(function (data) {
         vm.msgBoxes = data;
@@ -49,9 +49,6 @@
     vm.creationSuccess = false;
     vm.scheduleMode = false;
     vm.choicess = '◯\n△\n×';
-
-    // read();
-    // vm.EventdataService.onPush(read);
 
     // initialize datepicker
     vm.datepicker = new Date();
@@ -80,11 +77,6 @@
     }
   };
 
-  HomeController.prototype.sendMes = function() {
-    console.log('HomeController activate sendMes');
-    vm.EventdataService.push({name: vm.user, text: vm.msg});
-  };
-
   HomeController.prototype.getDayClass = function(date, mode) {
     console.log('HomeController getDayClass');
     if (mode === 'day') {
@@ -106,7 +98,7 @@
 
   HomeController.prototype.submit = function() {
     console.log('HomeController activate sendMes');
-    var promise = vm.EventdataService.push({eventname: vm.eventname, description: vm.description, choicess: vm.choicess, schedule: vm.schedule});
+    var promise = vm.EventdataService.save({eventname: vm.eventname, description: vm.description, choicess: vm.choicess, schedule: vm.schedule});
     promise
       .then(function (datum) {
         console.log('datum.id:', datum.id);
