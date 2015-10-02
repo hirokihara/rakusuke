@@ -7,10 +7,10 @@
   'use strict';
 
   angular
-    .module('rakusuke.service.scheduledata', [])
+    .module('rakusuke.service.scheduledata', ['rakusuke.service.apimain'])
     .factory('ScheduledataService', ScheduledataService);
 
-  ScheduledataService.$inject = [];
+  ScheduledataService.$inject = ['ApimainService'];
 
   /**
    * ScheduledataService
@@ -18,7 +18,7 @@
    * @class ScheduledataService
    * @constructor
    */
-  function ScheduledataService() {
+  function ScheduledataService(ApimainService) {
 
     /**
      * My property description.  Like other pieces of your comment blocks,
@@ -28,15 +28,9 @@
      * @type {Object}
      * @default "foo"
      */
-    var someProperty = {};
+    ApimainService.setUri('schedule');
 
-    var scheduledataService = {
-      someMethod: function() {
-        return;
-      }
-    };
-
-    return scheduledataService;
+    return ApimainService;
   }
 
 })();
