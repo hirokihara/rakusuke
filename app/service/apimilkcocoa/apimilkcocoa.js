@@ -45,6 +45,7 @@
         var d = $q.defer();
         ds.get(id, function(err, datum) {
           d.resolve(datum);
+          console.log(datum);
         });
         return d.promise;
       },

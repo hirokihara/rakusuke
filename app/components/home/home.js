@@ -23,15 +23,34 @@
     this.id = $routeParams.id;
     this.$moment = $moment;
     this.EventdataService = EventdataService;
+
+    this.$moment.lang('ja', {
+      weekdays: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+      weekdaysShort: ['日', '月', '火', '水', '木', '金', '土'],
+    });
     console.log('routeParams.id:', this.id);
   }
 
-  function read() {
-    console.log('HomeController read Method');
-    var promise = vm.EventdataService.query();
+  function getEventdata(id) {
+    console.log('HomeController getEventdata Method id:', id);
+    var promise = vm.EventdataService.get(id);
     promise
-      .then(function (data) {
-        vm.msgBoxes = data;
+      .then(function (datum) {
+        vm.eventdata = datum;
+
+        // 取得したスケジュール情報を改行区切りで配列化
+        var arr = vm.eventdata.value.schedule.split(/\r\n|\r|\n/);
+
+        // 空の配列を削除
+        var i;
+        for (i = 0; i < arr.length; i++) {
+          if (arr[i].length <= 0) {
+            arr.splice(i, 1);
+          }
+        }
+
+        // バインディング
+        vm.scheduleArr = arr;
       })
       .catch(function (e) {
         console.log(e);
@@ -53,11 +72,24 @@
     // initialize datepicker
     vm.datepicker = new Date();
     vm.minDate = this.minDate ? null : new Date();
+
+    vm.maxDate = new Date(2020, 5, 22);
+
+    vm.schedule = '';
+
+    if (vm.id) {
+      vm.scheduleMode = true;
+      getEventdata(vm.id);
+    }
+  };
+
+  HomeController.prototype.getDayClass = function(date, mode) {
+    console.log('HomeController getDayClass');
     var tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     var afterTomorrow = new Date();
     afterTomorrow.setDate(tomorrow.getDate() + 2);
-    vm.events =
+    var events =
     [
       {
         date: tomorrow,
@@ -68,23 +100,12 @@
         status: 'partially'
       }
     ];
-    vm.maxDate = new Date(2020, 5, 22);
-
-    vm.schedule = '';
-
-    if (vm.id) {
-      vm.scheduleMode = true;
-    }
-  };
-
-  HomeController.prototype.getDayClass = function(date, mode) {
-    console.log('HomeController getDayClass');
     if (mode === 'day') {
       var dayToCheck = new Date(date).setHours(0, 0, 0, 0);
-      for (var i = 0; i < vm.events.length; i++) {
-        var currentDay = new Date(vm.events[i].date).setHours(0, 0, 0, 0);
+      for (var i = 0; i < events.length; i++) {
+        var currentDay = new Date(events[i].date).setHours(0, 0, 0, 0);
         if (dayToCheck === currentDay) {
-          return vm.events[i].status;
+          return events[i].status;
         }
       }
     }
@@ -93,10 +114,10 @@
 
   HomeController.prototype.addDate = function(date) {
     console.log('HomeController activate addDate', date);
-    vm.schedule = vm.schedule + vm.$moment (date).format('YYYY年MM月DD日 19:00〜') + '\n';
+    vm.schedule = vm.schedule + vm.$moment (date).format('MM月DD日（ddd） 19:00〜') + '\n';
   };
 
-  HomeController.prototype.submit = function() {
+  HomeController.prototype.submitEvent = function() {
     console.log('HomeController activate sendMes');
     var promise = vm.EventdataService.save({eventname: vm.eventname, description: vm.description, choicess: vm.choicess, schedule: vm.schedule});
     promise

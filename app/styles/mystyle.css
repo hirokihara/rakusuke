@@ -86,3 +86,17 @@
   padding-right: 20px;
   padding-left: 20px;
 }
+
+table.schedule {
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 10px 0 10px;
+    background-color: #fff;
+    text-align: center;
+}
+
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
