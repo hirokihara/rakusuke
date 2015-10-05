@@ -77,14 +77,14 @@
 {{home.id}}
 <section id="block3" ng-show="home.scheduleMode">
   <div>
-    <label for="inputEvent" class="control-label custom-label1">{{home.eventdata.value.eventname}}</label>
+    <label for="inputEvent" class="control-label custom-label1">{{home.schedule.value.eventname}}</label>
   </div>
   <div class="form-group">
     <div>
       <label for="inputDescription" class="control-label custom-label1">イベント概要<br></label>
     </div>
     <div>
-      <textarea ng-model="home.eventdata.value.description" class="form-control" id="inputDescription" rows="5" readonly></textarea>
+      <textarea ng-model="home.schedule.value.description" class="form-control" id="inputDescription" rows="5" readonly></textarea>
     </div>
   </div>
 

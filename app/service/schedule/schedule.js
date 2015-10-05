@@ -1,25 +1,25 @@
 /**
- * Eventdata Service module.
+ * Schedule Service module.
  *
- * @module rakusuke.service.eventdata
+ * @module rakusuke.service.schedule
  */
 (function() {
   'use strict';
 
   angular
-    .module('rakusuke.service.eventdata', ['rakusuke.service.apimain'])
-    .factory('EventdataService', EventdataService);
+    .module('rakusuke.service.schedule', ['rakusuke.service.apimain'])
+    .factory('ScheduleService', ScheduleService);
 
-  EventdataService.$inject = ['ApimainService'];
+  ScheduleService.$inject = ['ApimainService'];
 
   /**
-   * EventdataService
+   * ScheduleService
    *
-   * @class EventdataService
+   * @class ScheduleService
    * @constructor
    */
-  function EventdataService(ApimainService) {
-    console.log('EventdataService Constructor');
+  function ScheduleService(ApimainService) {
+    console.log('ScheduleService Constructor');
     /**
      * My property description.  Like other pieces of your comment blocks,
      * this can span multiple lines.

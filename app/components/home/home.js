@@ -7,10 +7,10 @@
   'use strict';
 
   angular
-    .module('rakusuke.components.home', ['rakusuke.service.eventdata'])
+    .module('rakusuke.components.home', ['rakusuke.service.schedule'])
     .controller('HomeController', HomeController);
 
-  HomeController.$inject = ['$routeParams', '$moment', 'EventdataService'];
+  HomeController.$inject = ['$routeParams', '$moment', 'ScheduleService'];
 
   /**
    * HomeController
@@ -18,11 +18,11 @@
    * @class HomeController
    * @constructor
    */
-  function HomeController($routeParams, $moment, EventdataService) {
+  function HomeController($routeParams, $moment, ScheduleService) {
     console.log('HomeController Constructor');
     this.id = $routeParams.id;
     this.$moment = $moment;
-    this.EventdataService = EventdataService;
+    this.ScheduleService = ScheduleService;
 
     this.$moment.lang('ja', {
       weekdays: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
@@ -31,15 +31,15 @@
     console.log('routeParams.id:', this.id);
   }
 
-  function getEventdata(id) {
-    console.log('HomeController getEventdata Method id:', id);
-    var promise = vm.EventdataService.get(id);
+  function getSchedule(id) {
+    console.log('HomeController getSchedule Method id:', id);
+    var promise = vm.ScheduleService.get(id);
     promise
       .then(function (datum) {
-        vm.eventdata = datum;
+        vm.schedule = datum;
 
         // 取得したスケジュール情報を改行区切りで配列化
-        var arr = vm.eventdata.value.schedule.split(/\r\n|\r|\n/);
+        var arr = vm.schedule.value.schedule.split(/\r\n|\r|\n/);
 
         // 空の配列を削除
         var i;
@@ -79,7 +79,7 @@
 
     if (vm.id) {
       vm.scheduleMode = true;
-      getEventdata(vm.id);
+      getSchedule(vm.id);
     }
   };
 
@@ -119,7 +119,7 @@
 
   HomeController.prototype.submitEvent = function() {
     console.log('HomeController activate sendMes');
-    var promise = vm.EventdataService.save({eventname: vm.eventname, description: vm.description, choicess: vm.choicess, schedule: vm.schedule});
+    var promise = vm.ScheduleService.save({eventname: vm.eventname, description: vm.description, choicess: vm.choicess, schedule: vm.schedule});
     promise
       .then(function (datum) {
         console.log('datum.id:', datum.id);
