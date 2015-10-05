@@ -24,7 +24,7 @@
     this.$moment = $moment;
     this.ScheduleService = ScheduleService;
 
-    this.$moment.lang('ja', {
+    this.$moment.locale('ja', {
       weekdays: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
       weekdaysShort: ['日', '月', '火', '水', '木', '金', '土'],
     });
@@ -39,7 +39,7 @@
         vm.schedule = datum;
 
         // 取得したスケジュール情報を改行区切りで配列化
-        var arr = vm.schedule.value.schedule.split(/\r\n|\r|\n/);
+        var arr = vm.schedule.value.date.split(/\r\n|\r|\n/);
 
         // 空の配列を削除
         var i;
@@ -56,6 +56,17 @@
         console.log(e);
       });
   }
+
+  // 改行文字を圧縮
+  function packLineBreaks(str) {
+    var pack = '';
+
+    // 複数の改行文字を一つに置き換える
+    pack = str.replace(/[\r\n|\r|\n]{1,}/, '\n');
+
+    return pack;
+  }
+
   /**
    * The controller activate makes it convenient to re-use the logic
    * for a refresh for the controller/View, keeps the logic together.
@@ -72,10 +83,9 @@
     // initialize datepicker
     vm.datepicker = new Date();
     vm.minDate = this.minDate ? null : new Date();
-
     vm.maxDate = new Date(2020, 5, 22);
 
-    vm.schedule = '';
+    vm.datearea = '';
 
     if (vm.id) {
       vm.scheduleMode = true;
@@ -114,12 +124,13 @@
 
   HomeController.prototype.addDate = function(date) {
     console.log('HomeController activate addDate', date);
-    vm.schedule = vm.schedule + vm.$moment (date).format('MM月DD日（ddd） 19:00〜') + '\n';
+    vm.datearea = vm.datearea + vm.$moment (date).format('MM月DD日（ddd） 19:00〜') + '\n';
   };
 
   HomeController.prototype.submitEvent = function() {
     console.log('HomeController activate sendMes');
-    var promise = vm.ScheduleService.save({eventname: vm.eventname, description: vm.description, choicess: vm.choicess, schedule: vm.schedule});
+    var date = packLineBreaks(vm.datearea);
+    var promise = vm.ScheduleService.save({eventname: vm.eventname, description: vm.description, choicess: vm.choicess, date: date});
     promise
       .then(function (datum) {
         console.log('datum.id:', datum.id);

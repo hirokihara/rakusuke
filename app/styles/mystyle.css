@@ -10,6 +10,11 @@
     border-color: #CCE0FF;
 }
 
+.btn-choice {
+    background-color: #eee;
+    border-color: #aaa;
+}
+
 .well {
 	background-color: #CCE0FF;
 }
@@ -87,16 +92,4 @@
   padding-left: 20px;
 }
 
-table.schedule {
-    border-collapse: collapse;
-    border-spacing: 0;
-    margin: 10px 0 10px;
-    background-color: #fff;
-    text-align: center;
-}
 
-tbody {
-    display: table-row-group;
-    vertical-align: middle;
-    border-color: inherit;
-}
