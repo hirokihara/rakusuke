@@ -38,7 +38,7 @@ module.exports = function(config) {
       'app/service/apimilkcocoa/apimilkcocoa.js',
       'app/service/eventdata/eventdata.js',
       'app/service/gruntfiles/gruntfiles.js',
-      'app/service/scheduledata/scheduledata.js',
+      'app/service/participant/participant.js',
       'test/components/about/about.spec.js',
       'test/components/contact/contact.spec.js',
       'test/components/eventlist/eventlist.spec.js',
@@ -54,8 +54,8 @@ module.exports = function(config) {
       'test/service/eventdata/eventdata.spec.js',
       'test/service/gruntfiles/gruntfiles.mock.js',
       'test/service/gruntfiles/gruntfiles.spec.js',
-      'test/service/scheduledata/scheduledata.mock.js',
-      'test/service/scheduledata/scheduledata.spec.js',
+      'test/service/participant/participant.mock.js',
+      'test/service/participant/participant.spec.js',
       // endinjector
       'app/scripts/main.js',
       'test/main.spec.js'

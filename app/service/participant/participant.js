@@ -1,24 +1,24 @@
 /**
- * Scheduledata Service module.
+ * Participant Service module.
  *
- * @module rakusuke.service.scheduledata
+ * @module rakusuke.service.participant
  */
 (function() {
   'use strict';
 
   angular
-    .module('rakusuke.service.scheduledata', ['rakusuke.service.apimain'])
-    .factory('ScheduledataService', ScheduledataService);
+    .module('rakusuke.service.participant', ['rakusuke.service.apimain'])
+    .factory('ParticipantService', ParticipantService);
 
-  ScheduledataService.$inject = ['ApimainService'];
+  ParticipantService.$inject = ['ApimainService'];
 
   /**
-   * ScheduledataService
+   * ParticipantService
    *
-   * @class ScheduledataService
+   * @class ParticipantService
    * @constructor
    */
-  function ScheduledataService(ApimainService) {
+  function ParticipantService(ApimainService) {
 
     /**
      * My property description.  Like other pieces of your comment blocks,
