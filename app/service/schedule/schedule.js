@@ -19,7 +19,6 @@
    * @constructor
    */
   function ScheduleService(ApimainService) {
-    console.log('ScheduleService Constructor');
     /**
      * My property description.  Like other pieces of your comment blocks,
      * this can span multiple lines.

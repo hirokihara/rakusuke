@@ -38,6 +38,7 @@
 
     var apimilkcocoaService = {
       setUri: function(uri) {
+        console.log('apimilkcocoaService setUri method uri:', uri);
         storename = uri;
       },
       get: function(id) {

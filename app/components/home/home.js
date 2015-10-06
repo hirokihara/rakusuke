@@ -7,10 +7,10 @@
   'use strict';
 
   angular
-    .module('rakusuke.components.home', ['rakusuke.service.schedule'])
+    .module('rakusuke.components.home', ['rakusuke.service.schedule', 'rakusuke.service.participant'])
     .controller('HomeController', HomeController);
 
-  HomeController.$inject = ['$routeParams', '$moment', 'ScheduleService'];
+  HomeController.$inject = ['$routeParams', '$moment', 'ScheduleService', 'ParticipantService'];
 
   /**
    * HomeController
@@ -18,11 +18,12 @@
    * @class HomeController
    * @constructor
    */
-  function HomeController($routeParams, $moment, ScheduleService) {
+  function HomeController($routeParams, $moment, ScheduleService, ParticipantService) {
     console.log('HomeController Constructor');
     this.id = $routeParams.id;
     this.$moment = $moment;
     this.ScheduleService = ScheduleService;
+    this.ParticipantService = ParticipantService;
 
     this.$moment.locale('ja', {
       weekdays: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
@@ -31,40 +32,102 @@
     console.log('routeParams.id:', this.id);
   }
 
-  function getSchedule(id) {
-    console.log('HomeController getSchedule Method id:', id);
+  /**
+   * 参加者の出席情報の配列を改行区切りの文字列に変換する関数
+   *
+   * @method toStringParticipantArray
+   * @param {String} str 改行文字を圧縮する対象の文字列
+   * @return {String} packed 改行文字を圧縮した結果の文字列
+   */
+  function toStringParticipantChoices(array) {
+    var str = '';
+
+    var i;
+    for (i = 0; i < array.length; i++) {
+      str = str + array[i].choice + '\n';
+    }
+
+    return str;
+  }
+
+  /**
+   * 参加者の出欠情報を保持するオブジェクトを作成する関数
+   *
+   * @method initParticipantData
+   */
+  function initParticipantData() {
+    var i;
+    var arr = [];
+    for (i = 0; i < vm.eventDateArray.length; i++) {
+      var data = {date:vm.eventDateArray[i], choice:'△'};
+      arr[i] = data;
+    }
+    // initialize participantData
+    vm.participantData = {name:'', array:arr, comment:''};
+  }
+
+  /**
+   * 改行区切りの文字列を配列にする関数
+   *
+   * @method parseLineBreaks
+   * @param {String} str 配列にする対象の改行区切りの文字列
+   * @return {Array} arr 改行区切りの文字列をパースした結果の配列
+   */
+  function parseLineBreaks(str) {
+    console.log('HomeController parseLineBreaks Method');
+    // 改行区切りの文字列を配列にする
+    var arr = str.split(/\r\n|\r|\n/);
+
+    // 空の配列を削除
+    var i;
+    for (i = 0; i < arr.length; i++) {
+      if (arr[i].length <= 0) {
+        arr.splice(i, 1);
+      }
+    }
+
+    return arr;
+  }
+
+  /**
+   * イベントの情報を取得する関数
+   *
+   * @method getEvent
+   * @param {String} id 取得するイベントのID
+   */
+  function getEvent(id) {
+    console.log('HomeController getEvent Method id:', id);
     var promise = vm.ScheduleService.get(id);
     promise
       .then(function (datum) {
-        vm.schedule = datum;
+        // イベント情報を取得
+        vm.eventData = datum.value;
 
-        // 取得したスケジュール情報を改行区切りで配列化
-        var arr = vm.schedule.value.date.split(/\r\n|\r|\n/);
+        // 日にち候補を配列にして一覧表示する
+        vm.eventDateArray = parseLineBreaks(vm.eventData.date);
 
-        // 空の配列を削除
-        var i;
-        for (i = 0; i < arr.length; i++) {
-          if (arr[i].length <= 0) {
-            arr.splice(i, 1);
-          }
-        }
-
-        // バインディング
-        vm.scheduleArr = arr;
+        // 参加者の出欠情報を保持するオブジェクトを作成する
+        initParticipantData();
       })
       .catch(function (e) {
         console.log(e);
       });
   }
 
-  // 改行文字を圧縮
+  /**
+   * 改行文字を圧縮する関数
+   *
+   * @method packLineBreaks
+   * @param {String} str 改行文字を圧縮する対象の文字列
+   * @return {String} packed 改行文字を圧縮した結果の文字列
+   */
   function packLineBreaks(str) {
-    var pack = '';
+    var packed = '';
 
-    // 複数の改行文字を一つに置き換える
-    pack = str.replace(/[\r\n|\r|\n]{1,}/, '\n');
+    // 複数の改行文字を一つにまとめる（空行を削除する）
+    packed = str.replace(/[\r\n|\r|\n]{1,}/, '\n');
 
-    return pack;
+    return packed;
   }
 
   /**
@@ -78,23 +141,32 @@
     vm = this;
     vm.creationSuccess = false;
     vm.scheduleMode = false;
-    vm.choicess = '◯\n△\n×';
+    vm.participantArr = [];
 
     // initialize datepicker
     vm.datepicker = new Date();
     vm.minDate = this.minDate ? null : new Date();
     vm.maxDate = new Date(2020, 5, 22);
 
-    vm.datearea = '';
+    // initialize eventData
+    vm.eventData = {title:'', description:'', choicess:'◯\n△\n×', date:''};
+
+    // initialize participantData
+    vm.participantData = {name:'', array:[], comment:''};
 
     if (vm.id) {
       vm.scheduleMode = true;
-      getSchedule(vm.id);
+      getEvent(vm.id);
     }
   };
 
+  /**
+   * 予定日をカレンダーへ反映するメソッド
+   *
+   * @method getDayClass
+   */
   HomeController.prototype.getDayClass = function(date, mode) {
-    console.log('HomeController getDayClass');
+    console.log('HomeController getDayClass Method');
     var tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     var afterTomorrow = new Date();
@@ -122,15 +194,51 @@
     return '';
   };
 
+  /**
+   * カレンダーの入力内容を日にちテキストエリアへ反映するメソッド
+   *
+   * @method addDate
+   */
   HomeController.prototype.addDate = function(date) {
-    console.log('HomeController activate addDate', date);
-    vm.datearea = vm.datearea + vm.$moment (date).format('MM月DD日（ddd） 19:00〜') + '\n';
+    console.log('HomeController addDate Method', date);
+    vm.eventData.date = vm.eventData.date + vm.$moment (date).format('MM月DD日（ddd） 19:00〜') + '\n';
   };
 
+  /**
+   * 主催者が作成したイベント情報を保存するメソッド
+   *
+   * @method submitEvent
+   */
   HomeController.prototype.submitEvent = function() {
-    console.log('HomeController activate sendMes');
-    var date = packLineBreaks(vm.datearea);
-    var promise = vm.ScheduleService.save({eventname: vm.eventname, description: vm.description, choicess: vm.choicess, date: date});
+    console.log('HomeController submitEvent Method');
+    // 日にちテキストエリアの空行を詰める
+    vm.eventData.date = packLineBreaks(vm.eventData.date);
+
+    // イベント情報を保存
+    var promise = vm.ScheduleService.save(vm.eventData);
+    promise
+      .then(function (datum) {
+        console.log('datum.id:', datum.id);
+        vm.id = datum.id;
+        vm.creationSuccess = true;
+      })
+      .catch(function (e) {
+        console.log(e);
+      });
+  };
+
+  /**
+   * 参加者が入力した情報を保存するメソッド
+   *
+   * @method submitParticipation
+   */
+  HomeController.prototype.submitParticipation = function() {
+    console.log('HomeController submitParticipation Method');
+    console.log('vm.participantData:', vm.participantData);
+    console.log('vm.participantDataArray:', toStringParticipantChoices(vm.participantData.array));
+    var choices = toStringParticipantChoices(vm.participantData.array);
+    var data = {eventId: vm.id, name: vm.participantData.name, comment: vm.participantData.comment, choices:choices};
+    var promise = vm.ParticipantService.save(data);
     promise
       .then(function (datum) {
         console.log('datum.id:', datum.id);

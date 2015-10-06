@@ -15,6 +15,11 @@
     border-color: #aaa;
 }
 
+.btn:active, .btn.active {
+    background-color: #00FF68;
+    border-color: #aaa;
+}
+
 .well {
 	background-color: #CCE0FF;
 }

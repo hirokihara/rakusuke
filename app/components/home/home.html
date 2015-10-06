@@ -18,7 +18,7 @@
                     <div style="display:inline-block; min-height:290px;">
                       <datepicker id="datePicker" ng-model="home.datepicker" min-date="home.minDate" max-date="home.maxDate" show-weeks="false" class="well well-sm" custom-class="home.getDayClass(date, mode)" format-day-title="yyyy年 MM月" ng-click="home.addDate(home.datepicker)"></datepicker>
                     </div>
-                    <textarea id="datearea" ng-model="home.datearea" class="form-control visible-sm visible-xs" rows="5"></textarea>
+                    <textarea id="datearea" ng-model="home.eventData.date" class="form-control visible-sm visible-xs" rows="5"></textarea>
                   </div>
 
                 </div>
@@ -27,7 +27,7 @@
                   <!--
                   ** 日にちエリア
                   -->
-                  <textarea id="datearea" ng-model="home.datearea" class="form-control" rows="5"></textarea>
+                  <textarea id="datearea" ng-model="home.eventData.date" class="form-control" rows="5"></textarea>
 
                 </div>
             </div>
@@ -43,7 +43,7 @@
                 ※◯◯さんの歓迎会など<br>
               </div>
               <div>
-                <input type="text" ng-model="home.eventname" class="form-control" id="inputEventName" placeholder="イベント名" required>
+                <input type="text" ng-model="home.eventData.title" class="form-control" id="inputEventName" placeholder="イベント名" required>
               </div>
             </div>
             <div class="form-group">
@@ -51,7 +51,7 @@
                 <label for="inputDescription" class="control-label custom-label1">イベント概要<br></label>
               </div>
               <div>
-                <textarea ng-model="home.description" class="form-control"  id="inputDescription" rows="5"></textarea>
+                <textarea ng-model="home.eventData.description" class="form-control"  id="inputDescription" rows="5"></textarea>
               </div>
             </div>
 
@@ -76,71 +76,75 @@
 -->
 {{home.id}}
 <section id="block3" ng-show="home.scheduleMode">
-  <div>
-    <label class="control-label custom-label1">{{home.schedule.value.eventname}}</label>
-  </div>
-  <div class="form-group">
-    <div>
-      <label for="inputDescription" class="control-label custom-label1">イベント概要<br></label>
-    </div>
-    <div>
-      <textarea ng-model="home.schedule.value.description" class="form-control" id="inputDescription" rows="5" readonly></textarea>
-    </div>
-  </div>
-
   <div style="overflow: auto;">
-    <table class="table table-bordered" style="overflow: visible; margin-top: 20px; margin-bottom: 30px;">
+    <div>
+      <label class="control-label custom-label1">{{home.eventData.title}}</label>
+    </div>
+    <div class="form-group">
+      <div>
+        <label for="inputDescription" class="control-label custom-label1">イベント概要<br></label>
+      </div>
+      <div>
+        <textarea ng-model="home.eventData.description" class="form-control" id="inputDescription" rows="5" readonly></textarea>
+      </div>
+    </div>
+
+    <!--
+      出欠一覧
+    -->
+    <table class="table table-bordered" style="margin-top: 20px; margin-bottom: 30px;">
       <tbody>
-      <tr><td style="width: 80px; max-width: 80px; min-width: 80px; text-align: left; text-valign: middle;">参加者</td><td ng-repeat="arr in home.scheduleArr" style="width: 120px; max-width: 120px; min-width: 120px;">{{arr}}</td></tr>
+      <tr><td style="width: 80px; max-width: 80px; min-width: 80px; text-align: left; text-valign: middle;">参加者</td><td ng-repeat="arr in home.eventDateArray" style="width: 120px; max-width: 120px; min-width: 120px;">{{arr}}</td></tr>
       <tr><td>参加者</td><td>1</td><td>2</td><td>3</td></tr>
       </tbody>
     </table>
-  </div>
-<!--   <ul ng-repeat="arr in home.scheduleArr">
-    <li>
-      {{arr}}
-    </li>
-  </ul> -->
-  <div id="scheduleForm">
-    <form class="form-horizontal">
-      <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
-
-          <div class="col-md-12 col-sm-12">
-
-            <!--
-            ** イベント情報エリア
-            -->
-            <div class="form-group" class="col-sm-12 col-xs-12">
-              <div>
-                <label for="inputParticipantName" class="control-label custom-label1">名前</label><br>
+  <!--   <ul ng-repeat="arr in home.scheduleArr">
+      <li>
+        {{arr}}
+      </li>
+    </ul> -->
+    <div id="scheduleForm">
+      <form class="form-horizontal">
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-10">
+            <div class="col-md-12 col-sm-12">
+              <!--
+              ** 出欠入力エリア
+              -->
+              <div class="form-group" class="col-sm-12 col-xs-12">
+                <div>
+                  <label for="inputParticipantName" class="control-label custom-label1">名前</label><br>
+                </div>
+                <div>
+                  <input type="text" ng-model="home.participantData.name" class="form-control" id="inputParticipantName" placeholder="名前" required>
+                </div>
               </div>
-              <div>
-                <input type="text" ng-model="home.name" class="form-control" id="inputParticipantName" placeholder="名前" required>
+              <!--
+              ** 出欠入力エリア（○△×）
+              -->
+              <div class="form-group">
+                <div>
+                  <label class="control-label custom-label1">日にち<br></label>
+                </div>
+                <div ng-repeat="arr in home.participantData.array" style="padding-right: 0px; margin-bottom: 3px;">
+                  <font size="-1">{{arr.date}}</font>
+                  <font face="miryo"><b>
+                    <label class="btn btn-choice" ng-model="arr.choice" btn-radio="'○'">○</label>
+                    <label class="btn btn-choice" ng-model="arr.choice" btn-radio="'△'">△</label>
+                    <label class="btn btn-choice" ng-model="arr.choice" btn-radio="'×'">×</label>
+                  </b></font>
+                </div>
               </div>
+
             </div>
-            <div class="form-group">
-              <div>
-                <label class="control-label custom-label1">日にち<br></label>
-              </div>
-              <div class="row col-sm-12 col-xs-12" ng-repeat="arr in home.scheduleArr" style="padding-right: 0px; margin-bottom: 3px;">
-                <font size="-1">{{arr}}</font>
-                <font face="miryo">
-                  <label class="btn btn-choice" ng-model="home.choice" btn-radio="'○'" uncheckable>○</label>
-                  <label class="btn btn-choice" ng-model="home.choice" btn-radio="'△'" uncheckable>△</label>
-                  <label class="btn btn-choice" ng-model="home.choice" btn-radio="'×'" uncheckable>×</label>
-                </font>
-              </div>
-            </div>
-
           </div>
+          <div class="col-md-1"></div>
         </div>
-        <div class="col-md-1"></div>
+      </form>
+      <div class="center-block">
+        <button type="submit" class="btn btn-primary btn-lg col-sm-2 col-sm-offset-5 col-xs-12" ng-click="home.submitParticipation()">更新する</button>
       </div>
-    </form>
-    <div class="center-block">
-      <button type="submit" class="btn btn-primary btn-lg col-sm-2 col-sm-offset-5 col-xs-12" ng-click="home.submitParticipation()">更新する</button>
     </div>
   </div>
 </section>
