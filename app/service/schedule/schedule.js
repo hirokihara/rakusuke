@@ -33,9 +33,11 @@
     // 'query': {method: 'GET', isArray: true},
     // 'remove': {method: 'DELETE'},
     // 'delete': {method: 'DELETE'}
-    ApimainService.setUri('main');
+    // ApimainService.setUri('main');
+    var apiService = new ApimainService('main');
+    console.log(apiService);
 
-    return ApimainService;
+    return apiService;
   }
 
 })();

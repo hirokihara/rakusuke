@@ -28,9 +28,11 @@
      * @type {Object}
      * @default "foo"
      */
-    ApimainService.setUri('schedule');
+    // ApimainService.setUri('schedule');
+    var apiService = new ApimainService('schedule');
+    console.log(apiService);
 
-    return ApimainService;
+    return apiService;
   }
 
 })();

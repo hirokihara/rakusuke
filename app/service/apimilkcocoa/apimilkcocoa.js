@@ -28,75 +28,66 @@
      * @type {Object}
      * @default "foo"
      */
-    var milkcocoa = new MilkCocoa('postiecel9pz.mlkcca.com');
-    var storename = '';
     // 'get': {method: 'GET'},
     // 'save': {method: 'POST'},
     // 'query': {method: 'GET', isArray: true},
     // 'remove': {method: 'DELETE'},
     // 'delete': {method: 'DELETE'}
-
-    var apimilkcocoaService = {
-      setUri: function(uri) {
+    return function(storename) {
+      this.milkcocoa = new MilkCocoa('postiecel9pz.mlkcca.com');
+      this.ds = this.milkcocoa.dataStore(storename);
+      this.setUri = function(uri) {
         console.log('apimilkcocoaService setUri method uri:', uri);
         storename = uri;
-      },
-      get: function(id) {
-        var ds = milkcocoa.dataStore(storename);
+      };
+      this.get = function(id) {
         var d = $q.defer();
-        ds.get(id, function(err, datum) {
+        this.ds.get(id, function(err, datum) {
           d.resolve(datum);
           console.log(datum);
         });
         return d.promise;
-      },
-      query: function() {
-        var ds = milkcocoa.dataStore(storename);
+      };
+      this.query = function() {
         var d = $q.defer();
-        ds.stream().next(function(err, data) {
+        this.ds.stream().next(function(err, data) {
           d.resolve(data);
         });
         return d.promise;
-      },
-      save: function(data) {
-        var ds = milkcocoa.dataStore(storename);
+      };
+      this.save = function(data) {
         var d = $q.defer();
-        ds.push(data, function(err, datum) {
+        this.ds.push(data, function(err, datum) {
           d.resolve(datum);
         });
         return d.promise;
-      },
-      remove: function(id) {
-        var ds = milkcocoa.dataStore(storename);
+      };
+      this.remove = function(id) {
         var d = $q.defer();
-        ds.remove(id, function(err, datum) {
+        this.ds.remove(id, function(err, datum) {
           d.resolve(datum);
         });
         return d.promise;
-      },
-      on: function(event, fnc) {
-        var ds = milkcocoa.dataStore(storename);
-        if (ds) {
-          ds.on(event, function(event) {
+      };
+      this.on = function(event, fnc) {
+        if (this.ds) {
+          this.ds.on(event, function(event) {
             fnc();
           });
           return true;
         } else {
           return false;
         }
-      },
-      off: function(event) {
-        var ds = milkcocoa.dataStore(storename);
-        if (ds) {
-          ds.off(event);
+      };
+      this.off = function(event) {
+        if (this.ds) {
+          this.ds.off(event);
           return true;
         } else {
           return false;
         }
-      }
+      };
     };
-
-    return apimilkcocoaService;
   }
 
 })();
