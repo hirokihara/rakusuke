@@ -1,24 +1,24 @@
 /**
  * Schedule Service module.
  *
- * @module rakusuke.service.schedule
+ * @module rakusuke.service.eventdata
  */
 (function() {
   'use strict';
 
   angular
-    .module('rakusuke.service.schedule', ['rakusuke.service.apimain'])
-    .factory('ScheduleService', ScheduleService);
+    .module('rakusuke.service.eventdata', ['rakusuke.service.apimain'])
+    .factory('EventdataService', EventdataService);
 
-  ScheduleService.$inject = ['ApimainService'];
+  EventdataService.$inject = ['ApimainService'];
 
   /**
-   * ScheduleService
+   * EventdataService
    *
-   * @class ScheduleService
+   * @class EventdataService
    * @constructor
    */
-  function ScheduleService(ApimainService) {
+  function EventdataService(ApimainService) {
     /**
      * My property description.  Like other pieces of your comment blocks,
      * this can span multiple lines.
@@ -34,7 +34,7 @@
     // 'remove': {method: 'DELETE'},
     // 'delete': {method: 'DELETE'}
     // ApimainService.setUri('main');
-    var apiService = new ApimainService('main');
+    var apiService = new ApimainService('event');
     console.log(apiService);
 
     return apiService;

@@ -1,24 +1,24 @@
 /**
  * Participant Service module.
  *
- * @module rakusuke.service.participant
+ * @module rakusuke.service.memberdata
  */
 (function() {
   'use strict';
 
   angular
-    .module('rakusuke.service.participant', ['rakusuke.service.apimain'])
-    .factory('ParticipantService', ParticipantService);
+    .module('rakusuke.service.memberdata', ['rakusuke.service.apimain'])
+    .factory('MemberdataService', MemberdataService);
 
-  ParticipantService.$inject = ['ApimainService'];
+  MemberdataService.$inject = ['ApimainService'];
 
   /**
-   * ParticipantService
+   * MemberdataService
    *
-   * @class ParticipantService
+   * @class MemberdataService
    * @constructor
    */
-  function ParticipantService(ApimainService) {
+  function MemberdataService(ApimainService) {
 
     /**
      * My property description.  Like other pieces of your comment blocks,
@@ -29,7 +29,7 @@
      * @default "foo"
      */
     // ApimainService.setUri('schedule');
-    var apiService = new ApimainService('schedule');
+    var apiService = new ApimainService('member');
     console.log(apiService);
 
     return apiService;

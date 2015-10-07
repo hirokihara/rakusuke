@@ -117,7 +117,7 @@
                   <label for="inputParticipantName" class="control-label custom-label1">名前</label><br>
                 </div>
                 <div>
-                  <input type="text" ng-model="home.participantData.name" class="form-control" id="inputParticipantName" placeholder="名前" required>
+                  <input type="text" ng-model="home.memberData.name" class="form-control" id="inputParticipantName" placeholder="名前" required>
                 </div>
               </div>
               <!--
@@ -127,7 +127,7 @@
                 <div>
                   <label class="control-label custom-label1">日にち<br></label>
                 </div>
-                <div ng-repeat="arr in home.participantData.array" style="padding-right: 0px; margin-bottom: 3px;">
+                <div ng-repeat="arr in home.memberData.array" style="padding-right: 0px; margin-bottom: 3px;">
                   <font size="-1">{{arr.date}}</font>
                   <font face="miryo"><b>
                     <label class="btn btn-choice" ng-model="arr.choice" btn-radio="'○'">○</label>

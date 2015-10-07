@@ -7,10 +7,10 @@
   'use strict';
 
   angular
-    .module('rakusuke.components.eventlist', ['rakusuke.service.schedule'])
+    .module('rakusuke.components.eventlist', ['rakusuke.service.eventdata'])
     .controller('EventlistController', EventlistController);
 
-  EventlistController.$inject = ['ScheduleService'];
+  EventlistController.$inject = ['EventdataService'];
 
   /**
    * EventlistController
@@ -18,14 +18,14 @@
    * @class EventlistController
    * @constructor
    */
-  function EventlistController(ScheduleService) {
+  function EventlistController(EventdataService) {
     console.log('EventlistController Constructor');
-    this.ScheduleService = ScheduleService;
+    this.EventdataService = EventdataService;
   }
 
   function read() {
     console.log('HomeController read Method');
-    var promise = vm.ScheduleService.query();
+    var promise = vm.EventdataService.query();
     promise
       .then(function (data) {
         vm.schedule = data;
@@ -44,11 +44,11 @@
     console.log('EventlistController activate Method');
     vm = this;
     read();
-    // vm.ScheduleService.on('push', read);
+    // vm.EventdataService.on('push', read);
   };
   EventlistController.prototype.remove = function(id) {
     console.log('EventlistController remove Method id:', id);
-    var promise = vm.ScheduleService.remove(id);
+    var promise = vm.EventdataService.remove(id);
     promise
       .then(function (datum) {
         read();
@@ -59,7 +59,7 @@
   };
   // EventlistController.prototype.sendMes = function() {
   //   console.log('HomeController activate sendMes');
-  //   vm.ScheduleService.push({name: vm.user, text: vm.msg});
+  //   vm.EventdataService.push({name: vm.user, text: vm.msg});
   // };
   /**
    * Angular ViewModel

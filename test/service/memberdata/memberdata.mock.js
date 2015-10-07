@@ -2,10 +2,10 @@
   'use strict';
 
   angular
-    .module('rakusuke.mock.service.participant', [])
-    .factory('ParticipantService', ParticipantService);
+    .module('rakusuke.mock.service.memberdata', [])
+    .factory('MemberdataService', MemberdataService);
 
-  function ParticipantService() {
+  function MemberdataService() {
     return {
       some: someSpy
     };

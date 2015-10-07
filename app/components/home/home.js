@@ -7,10 +7,10 @@
   'use strict';
 
   angular
-    .module('rakusuke.components.home', ['rakusuke.service.schedule', 'rakusuke.service.participant'])
+    .module('rakusuke.components.home', ['rakusuke.service.eventdata', 'rakusuke.service.memberdata'])
     .controller('HomeController', HomeController);
 
-  HomeController.$inject = ['$routeParams', '$moment', 'ScheduleService', 'ParticipantService'];
+  HomeController.$inject = ['$routeParams', '$moment', 'EventdataService', 'MemberdataService'];
 
   /**
    * HomeController
@@ -18,12 +18,12 @@
    * @class HomeController
    * @constructor
    */
-  function HomeController($routeParams, $moment, ScheduleService, ParticipantService) {
+  function HomeController($routeParams, $moment, EventdataService, MemberdataService) {
     console.log('HomeController Constructor');
     this.id = $routeParams.id;
     this.$moment = $moment;
-    this.ScheduleService = ScheduleService;
-    this.ParticipantService = ParticipantService;
+    this.EventdataService = EventdataService;
+    this.MemberdataService = MemberdataService;
 
     this.$moment.locale('ja', {
       weekdays: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
@@ -62,8 +62,8 @@
       var data = {date:vm.eventDateArray[i], choice:'△'};
       arr[i] = data;
     }
-    // initialize participantData
-    vm.participantData = {name:'', array:arr, comment:''};
+    // initialize memberData
+    vm.memberData = {name:'', array:arr, comment:''};
   }
 
   /**
@@ -97,7 +97,7 @@
    */
   function getEvent(id) {
     console.log('HomeController getEvent Method id:', id);
-    var promise = vm.ScheduleService.get(id);
+    var promise = vm.EventdataService.get(id);
     promise
       .then(function (datum) {
         // イベント情報を取得
@@ -141,7 +141,7 @@
     vm = this;
     vm.creationSuccess = false;
     vm.scheduleMode = false;
-    vm.participantArr = [];
+    vm.memberArr = [];
 
     // initialize datepicker
     vm.datepicker = new Date();
@@ -151,8 +151,8 @@
     // initialize eventData
     vm.eventData = {title:'', description:'', choicess:'◯\n△\n×', date:''};
 
-    // initialize participantData
-    vm.participantData = {name:'', array:[], comment:''};
+    // initialize memberData
+    vm.memberData = {name:'', array:[], comment:''};
 
     if (vm.id) {
       vm.scheduleMode = true;
@@ -215,7 +215,7 @@
     vm.eventData.date = packLineBreaks(vm.eventData.date);
 
     // イベント情報を保存
-    var promise = vm.ScheduleService.save(vm.eventData);
+    var promise = vm.EventdataService.save(vm.eventData);
     promise
       .then(function (datum) {
         console.log('datum.id:', datum.id);
@@ -234,11 +234,11 @@
    */
   HomeController.prototype.submitParticipation = function() {
     console.log('HomeController submitParticipation Method');
-    console.log('vm.participantData:', vm.participantData);
-    console.log('vm.participantDataArray:', toStringParticipantChoices(vm.participantData.array));
-    var choices = toStringParticipantChoices(vm.participantData.array);
-    var data = {eventId: vm.id, name: vm.participantData.name, comment: vm.participantData.comment, choices:choices};
-    var promise = vm.ParticipantService.save(data);
+    console.log('vm.memberData:', vm.memberData);
+    console.log('vm.memberDataArray:', toStringParticipantChoices(vm.memberData.array));
+    var choices = toStringParticipantChoices(vm.memberData.array);
+    var data = {eventId: vm.id, name: vm.memberData.name, comment: vm.memberData.comment, choices:choices};
+    var promise = vm.MemberdataService.save(data);
     promise
       .then(function (datum) {
         console.log('datum.id:', datum.id);
