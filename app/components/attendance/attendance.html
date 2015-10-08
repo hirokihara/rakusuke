@@ -1,7 +1,7 @@
 <!--
 ** 出欠入力
 -->
-<section id="block1" ng-show="attendance.scheduleMode">
+<section id="block1" ng-hide="attendance.errorMode">
   <div class="row">
     <div class="col-md-1"></div>
     <div class="col-md-10">
@@ -23,16 +23,17 @@
         -->
         <table class="table table-bordered" style="margin-top: 20px; margin-bottom: 30px;">
           <tbody>
-          <tr><td style="width: 80px; max-width: 80px; min-width: 80px; text-align: left; text-valign: middle;">参加者</td><td ng-repeat="arr in attendance.eventDateArray" style="width: 120px; max-width: 120px; min-width: 120px;">{{arr}}</td></tr>
-          <tr><td>参加者</td><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td style="width: 110px; max-width: 110px; min-width: 110px; text-align: left; text-valign: middle;">参加者</td><td ng-repeat="arr in attendance.eventDateArray" style="width: 120px; max-width: 120px; min-width: 120px;">{{arr}}</td><td style="min-width: 300px; max-width: 400px;">コメント</td></tr>
+          <tr ng-repeat="member in attendance.memberList"><td><a ng-click="attendance.editMember(member.id)">{{member.name}}</a></td>
+            <td ng-repeat="choice in member.choice track by $index" style="text-align:center"><font face="miryo">{{choice}}</font></td><td>{{member.comment}}</td></tr>
           </tbody>
         </table>
-    <!--   <ul ng-repeat="arr in attendance.scheduleArr">
-        <li>
-          {{arr}}
-        </li>
-      </ul> -->
-        <div id="scheduleForm">
+
+        <div align="center" ng-show="attendance.initButton">
+          <button type="button" class="green-ball" ng-click="attendance.initMember()">出欠を<br>入力する</button>
+        </div>
+
+        <div id="memberForm" ng-show="attendance.editMode">
           <form class="form-horizontal">
               <div class="col-md-12 col-sm-12">
                 <!--
@@ -40,7 +41,7 @@
                 -->
                 <div class="form-group" class="col-sm-12 col-xs-12">
                   <div>
-                    <label for="inputMenberName" class="control-label custom-label1">名前</label><br>
+                    <label id="inputMenber" for="inputMenberName" class="control-label custom-label1">名前</label><br>
                   </div>
                   <div>
                     <input type="text" ng-model="attendance.memberData.name" class="form-control" id="inputMenberName" placeholder="名前" required>
@@ -53,7 +54,7 @@
                   <div>
                     <label class="control-label custom-label1">日にち<br></label>
                   </div>
-                  <div ng-repeat="arr in attendance.memberData.choiceArray" style="padding-right: 0px; margin-bottom: 3px;">
+                  <div ng-repeat="arr in attendance.memberData.choiceSet" style="padding-right: 0px; margin-bottom: 3px;">
                     <font size="-1">{{arr.date}}</font>
                     <font face="miryo"><b>
                       <label class="btn btn-choices" ng-model="arr.choice" btn-radio="'○'">○</label>
@@ -81,9 +82,13 @@
     </div>
     <div class="col-md-1"></div>
     <div class="col-md-12">
-      <div class="center-block">
-        <button type="submit" class="btn btn-primary btn-lg col-sm-2 col-sm-offset-5 col-xs-12" ng-click="attendance.submitMember()">更新する</button>
+      <div align="center" ng-show="attendance.editMode">
+        <button type="submit" class="green-ball" ng-click="attendance.submitMember()">更新する</button>
       </div>
     </div>
   </div>
 </section>
+<section id="block2" ng-show="attendance.errorMode">
+  <font size="+2" color=red>Error: 指定されたイベントは存在しません</font>
+</section>
+

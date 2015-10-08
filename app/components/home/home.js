@@ -64,7 +64,7 @@
     vm.maxDate = new Date(2020, 5, 22);
 
     // initialize eventData
-    vm.eventData = {title:'', description:'', choices:'◯\n△\n×', date:''};
+    vm.eventData = {title: '', description: '', choices: '◯\n△\n×', date: ''};
   };
 
   /**

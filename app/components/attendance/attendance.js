@@ -57,7 +57,7 @@
       array[i] = data;
     }
     // initialize memberData
-    vm.memberData = {name:'', choiceArray:array, comment:''};
+    vm.memberData = {id: '', name: '', choiceSet: array, comment: ''};
   }
 
   /**
@@ -84,24 +84,50 @@
   }
 
   /**
-   * イベントの情報を取得する関数
+   * イベント参加者リストを表示する
    *
-   * @method getEventData
+   * @method dispMemberList
    * @param {String} id 取得するイベントのID
    */
-  function dispMemberList(id) {
-    console.log('AttendanceController getEventData Method id:', id);
-    var promise = vm.EventdataService.get(id);
+  function dispMemberList() {
+    console.log('AttendanceController dispMemberList Method');
+    var promise = vm.MemberdataService.query();
+    promise
+      .then(function (data) {
+        // vm.memberList = data;
+        var array = [];
+        var i;
+        for (i = 0; i < data.length; i++) {
+          array.push({id: data[i].id, name: data[i].value.name, choice: parseLineBreaks(data[i].value.choice), comment: data[i].value.comment});
+        }
+        vm.memberList = array;
+        console.log(vm.memberList);
+      })
+      .catch(function (e) {
+        console.log(e);
+      });
+  }
+
+  /**
+   * イベント参加者の情報を取得する関数
+   *
+   * @method getMemberData
+   * @param {String} id 取得するイベント参加者のID
+   */
+  function getMemberData(id) {
+    console.log('AttendanceController getMemberData Method id:', id);
+    var promise = vm.MemberdataService.get(id);
     promise
       .then(function (datum) {
-        // イベント情報を取得
-        vm.eventData = datum.value;
-
-        // 日にち候補を配列にして一覧表示する
-        vm.eventDateArray = parseLineBreaks(vm.eventData.date);
-
-        // 参加者の出欠情報を保持するオブジェクトを作成する
-        initMemberData();
+        // initialize memberData
+        var i;
+        var array = [];
+        var choiceArray = parseLineBreaks(datum.value.choice);
+        for (i = 0; i < vm.eventDateArray.length; i++) {
+          var data = {date:vm.eventDateArray[i], choice:choiceArray[i]};
+          array[i] = data;
+        }
+        vm.memberData = {id: id, name: datum.value.name, choiceSet: array, comment: datum.value.comment};
       })
       .catch(function (e) {
         console.log(e);
@@ -121,20 +147,19 @@
       .then(function (datum) {
         // イベント情報を取得
         vm.eventData = datum.value;
-        // datum.timestampはUNIXタイムスタンプ
-        console.log('AttendanceController getEventData Method datum:', datum);
-        console.log('AttendanceController getEventData Method timestamp:', datum.timestamp);
-        vm.eventTimestamp = Date(datum.timestamp);
-        console.log('AttendanceController getEventData Method timestamp:', vm.eventTimestamp);
 
         // 日にち候補を配列にして一覧表示する
         vm.eventDateArray = parseLineBreaks(vm.eventData.date);
 
         // 参加者の出欠情報を保持するオブジェクトを作成する
         initMemberData();
+
+        // イベント参加者リストを表示する
+        dispMemberList();
       })
       .catch(function (e) {
         console.log(e);
+        vm.errorMode = true;
       });
   }
 
@@ -147,18 +172,43 @@
   AttendanceController.prototype.activate = function() {
     console.log('AttendanceController activate Method');
     vm = this;
-    vm.scheduleMode = false;
+    vm.editMode = false;
+    vm.errorMode = false;
+    vm.initButton = true;
 
     // initialize eventData
     vm.eventData = '';
 
     // initialize memberData
-    vm.memberData = {name:'', choiceArray:[], comment:''};
+    vm.memberData = {id: '', name: '', choiceSet: [], comment: ''};
 
     if (vm.eventId) {
-      vm.scheduleMode = true;
       getEventData(vm.eventId);
+    } else {
+      vm.errorMode = true;
     }
+  };
+
+  /**
+   * メンバーの出欠情報を保存するメソッド
+   *
+   * @method submitMember
+   */
+  AttendanceController.prototype.editMember = function(id) {
+    getMemberData(id);
+    vm.editMode = true;
+    vm.initButton = true;
+  };
+
+  /**
+   * メンバー情報の入力エリアを初期化するメソッド
+   *
+   * @method submitMember
+   */
+  AttendanceController.prototype.initMember = function(id) {
+    initMemberData();
+    vm.editMode = true;
+    vm.initButton = false;
   };
 
   /**
@@ -168,8 +218,8 @@
    */
   AttendanceController.prototype.submitMember = function() {
     console.log('AttendanceController submitMember Method');
-    var choice = toStringChoiceArray(vm.memberData.choiceArray);
-    var value = {eventId: vm.eventId, name: vm.memberData.name, comment: vm.memberData.comment, choice:choice};
+    var choice = toStringChoiceArray(vm.memberData.choiceSet);
+    var value = {name: vm.memberData.name, comment: vm.memberData.comment, choice: choice};
     var saveData = {id:'', value:value};
 
     // メンバーの出欠情報を保存（最大16KByte 全角だと約800文字）
@@ -177,6 +227,10 @@
     promise
       .then(function (datum) {
         console.log('datum.id:', datum.id);
+        dispMemberList();
+
+        vm.editMode = false;
+        vm.initButton = true;
       })
       .catch(function (e) {
         console.log(e);
