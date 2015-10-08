@@ -35,8 +35,6 @@
     // 'delete': {method: 'DELETE'}
     // ApimainService.setUri('main');
     var apiService = new ApimainService('event');
-    console.log(apiService);
-
     return apiService;
   }
 

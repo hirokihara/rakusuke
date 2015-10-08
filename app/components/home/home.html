@@ -1,4 +1,4 @@
-<section id="block1" ng-hide="home.id">
+<section id="block1" ng-hide="home.eventId">
   <div id="eventCreationForm">
     <form class="form-horizontal">
       <div class="row">
@@ -68,83 +68,7 @@
 
 <section id="block2" ng-show="home.creationSuccess">
 イベントを作成しました。下記URLへアクセスしてください。
-  <a href="http://localhost:3000/home/{{home.id}}">http://localhost:3000/home/{{home.id}}</a>
+  <a href="http://localhost:3000/attendance/{{home.eventId}}">http://localhost:3000/attendance/{{home.eventId}}</a>
 </section>
 
-<!--
-** 出欠入力
--->
-{{home.id}}
-<section id="block3" ng-show="home.scheduleMode">
-  <div style="overflow: auto;">
-    <div>
-      <label class="control-label custom-label1">{{home.eventData.title}}</label>
-    </div>
-    <div class="form-group">
-      <div>
-        <label for="inputDescription" class="control-label custom-label1">イベント概要<br></label>
-      </div>
-      <div>
-        <textarea ng-model="home.eventData.description" class="form-control" id="inputDescription" rows="5" readonly></textarea>
-      </div>
-    </div>
 
-    <!--
-      出欠一覧
-    -->
-    <table class="table table-bordered" style="margin-top: 20px; margin-bottom: 30px;">
-      <tbody>
-      <tr><td style="width: 80px; max-width: 80px; min-width: 80px; text-align: left; text-valign: middle;">参加者</td><td ng-repeat="arr in home.eventDateArray" style="width: 120px; max-width: 120px; min-width: 120px;">{{arr}}</td></tr>
-      <tr><td>参加者</td><td>1</td><td>2</td><td>3</td></tr>
-      </tbody>
-    </table>
-  <!--   <ul ng-repeat="arr in home.scheduleArr">
-      <li>
-        {{arr}}
-      </li>
-    </ul> -->
-    <div id="scheduleForm">
-      <form class="form-horizontal">
-        <div class="row">
-          <div class="col-md-1"></div>
-          <div class="col-md-10">
-            <div class="col-md-12 col-sm-12">
-              <!--
-              ** 出欠入力エリア
-              -->
-              <div class="form-group" class="col-sm-12 col-xs-12">
-                <div>
-                  <label for="inputParticipantName" class="control-label custom-label1">名前</label><br>
-                </div>
-                <div>
-                  <input type="text" ng-model="home.memberData.name" class="form-control" id="inputParticipantName" placeholder="名前" required>
-                </div>
-              </div>
-              <!--
-              ** 出欠入力エリア（○△×）
-              -->
-              <div class="form-group">
-                <div>
-                  <label class="control-label custom-label1">日にち<br></label>
-                </div>
-                <div ng-repeat="arr in home.memberData.array" style="padding-right: 0px; margin-bottom: 3px;">
-                  <font size="-1">{{arr.date}}</font>
-                  <font face="miryo"><b>
-                    <label class="btn btn-choice" ng-model="arr.choice" btn-radio="'○'">○</label>
-                    <label class="btn btn-choice" ng-model="arr.choice" btn-radio="'△'">△</label>
-                    <label class="btn btn-choice" ng-model="arr.choice" btn-radio="'×'">×</label>
-                  </b></font>
-                </div>
-              </div>
-
-            </div>
-          </div>
-          <div class="col-md-1"></div>
-        </div>
-      </form>
-      <div class="center-block">
-        <button type="submit" class="btn btn-primary btn-lg col-sm-2 col-sm-offset-5 col-xs-12" ng-click="home.submitParticipation()">更新する</button>
-      </div>
-    </div>
-  </div>
-</section>

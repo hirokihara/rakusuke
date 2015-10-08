@@ -28,14 +28,20 @@
      * @type {Object}
      * @default "foo"
      */
+    // 将来の変更に耐えられるよう、基本的に$resourceと同様のメソッドを用意しています。
     // 'get': {method: 'GET'},
     // 'save': {method: 'POST'},
     // 'query': {method: 'GET', isArray: true},
     // 'remove': {method: 'DELETE'},
     // 'delete': {method: 'DELETE'}
-    return function(storename) {
+    return function(storename, eventId) {
       this.milkcocoa = new MilkCocoa('postiecel9pz.mlkcca.com');
-      this.ds = this.milkcocoa.dataStore(storename);
+      if (eventId) {
+        this.ds = this.milkcocoa.dataStore(storename).child(eventId);
+      } else {
+        this.ds = this.milkcocoa.dataStore(storename);
+      }
+
       this.setUri = function(uri) {
         console.log('apimilkcocoaService setUri method uri:', uri);
         storename = uri;
@@ -57,9 +63,15 @@
       };
       this.save = function(data) {
         var d = $q.defer();
-        this.ds.push(data, function(err, datum) {
-          d.resolve(datum);
-        });
+        if (data.id) {
+          this.ds.set(data.id, data.value, function(err, datum) {
+            d.resolve(datum);
+          });
+        } else {
+          this.ds.push(data.value, function(err, datum) {
+            d.resolve(datum);
+          });
+        }
         return d.promise;
       };
       this.remove = function(id) {

@@ -30,6 +30,7 @@ module.exports = function(config) {
       // endbower
       // injector:js
       'app/components/about/about.js',
+      'app/components/attendance/attendance.js',
       'app/components/contact/contact.js',
       'app/components/eventlist/eventlist.js',
       'app/components/home/home.js',
@@ -40,6 +41,7 @@ module.exports = function(config) {
       'app/service/gruntfiles/gruntfiles.js',
       'app/service/memberdata/memberdata.js',
       'test/components/about/about.spec.js',
+      'test/components/attendance/attendance.spec.js',
       'test/components/contact/contact.spec.js',
       'test/components/eventlist/eventlist.spec.js',
       'test/components/home/home.spec.js',

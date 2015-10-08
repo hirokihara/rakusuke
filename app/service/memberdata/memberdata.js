@@ -28,11 +28,13 @@
      * @type {Object}
      * @default "foo"
      */
-    // ApimainService.setUri('schedule');
-    var apiService = new ApimainService('member');
-    console.log(apiService);
-
-    return apiService;
+    // var apiService = new ApimainService('member');
+    // return apiService;
+    return function(eventId) {
+      console.log('MemberdataService eventId;', eventId);
+      var apiService = new ApimainService('event', eventId);
+      return apiService;
+    };
   }
 
 })();

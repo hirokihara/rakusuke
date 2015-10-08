@@ -14,6 +14,7 @@
       'ngTouch',
       'angular-momentjs',
       'rakusuke.components.home',
+      'rakusuke.components.attendance',
       'rakusuke.components.about',
       'rakusuke.components.contact',
       'rakusuke.components.eventlist'
@@ -23,7 +24,7 @@
   AppController.$routeConfig = [
     {path: '/',       redirectTo: '/home'},
     {path: '/home',    component: 'home'},
-    {path: '/home/:id',    component: 'home'},
+    {path: '/attendance/:eventId',    component: 'attendance'},
     {path: '/about',   component: 'about'},
     {path: '/contact', component: 'contact'},
     {path: '/eventlist', component: 'eventlist'}
