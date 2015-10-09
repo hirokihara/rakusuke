@@ -107,7 +107,7 @@
    * @method addDate
    */
   HomeController.prototype.addDate = function(date) {
-    console.log('HomeController addDate Method', date);
+    console.log('HomeController addDate Method');
     vm.eventData.date = vm.eventData.date + vm.$moment (date).format('MM月DD日（ddd） 19:00〜') + '\n';
   };
 
@@ -126,7 +126,6 @@
     var promise = vm.EventdataService.save(saveData);
     promise
       .then(function (datum) {
-        console.log('datum.id:', datum.id);
         vm.eventId = datum.id;
         vm.creationSuccess = true;
       })

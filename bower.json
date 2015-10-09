@@ -9,7 +9,8 @@
     "angular-resource": "~1.4.5",
     "angular-touch": "~1.4.6",
     "bootstrap": "~3",
-    "eonasdan-bootstrap-datetimepicker": "~4.17.37"
+    "eonasdan-bootstrap-datetimepicker": "~4.17.37",
+    "ngSmoothScroll": "~1.7.1"
   },
   "overrides": {
     "angular-new-router": {

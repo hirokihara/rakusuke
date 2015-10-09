@@ -13,6 +13,7 @@
       'ui.bootstrap',
       'ngTouch',
       'angular-momentjs',
+      'smoothScroll',
       'rakusuke.components.home',
       'rakusuke.components.attendance',
       'rakusuke.components.about',

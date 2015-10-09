@@ -56,7 +56,7 @@
       };
       this.query = function() {
         var d = $q.defer();
-        this.ds.stream().next(function(err, data) {
+        this.ds.stream().size(100).next(function(err, data) {
           d.resolve(data);
         });
         return d.promise;

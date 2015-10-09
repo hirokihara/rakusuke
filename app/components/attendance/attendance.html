@@ -21,18 +21,20 @@
         <!--
           出欠一覧
         -->
-        <table class="table table-bordered" style="margin-top: 20px; margin-bottom: 30px;">
+        <table id="memberList" class="table table-bordered" style="margin-top: 20px; margin-bottom: 30px;">
           <tbody>
+          現在の参加人数：{{attendance.memberCount}}人
           <tr><td style="width: 110px; max-width: 110px; min-width: 110px; text-align: left; text-valign: middle;">参加者</td><td ng-repeat="arr in attendance.eventDateArray" style="width: 120px; max-width: 120px; min-width: 120px;">{{arr}}</td><td style="min-width: 300px; max-width: 400px;">コメント</td></tr>
-          <tr ng-repeat="member in attendance.memberList"><td><a ng-click="attendance.editMember(member.id)">{{member.name}}</a></td>
-            <td ng-repeat="choice in member.choice track by $index" style="text-align:center"><font face="miryo">{{choice}}</font></td><td>{{member.comment}}</td></tr>
+          <tr ng-repeat="member in attendance.memberList"><td><a href="#" scroll-to="dummy-MemberForm" callback-before="attendance.editMember(member)" duration="800" offset="{{attendance.editOffset}}">{{member.name}}</a></td>
+            <td ng-repeat="choice in member.choice track by $index" style="text-align:center"><font face="meiryo">{{choice}}</font></td><td>{{member.comment}}</td></tr>
           </tbody>
         </table>
 
         <div align="center" ng-show="attendance.initButton">
-          <button type="button" class="green-ball" ng-click="attendance.initMember()">出欠を<br>入力する</button>
+          <button type="button" class="green-ball" scroll-to="dummy-MemberForm" callback-before="attendance.initMember()" duration="800" offset="330">出欠を<br>入力する</button>
         </div>
 
+        <div id="dummy-MemberForm"></div>
         <div id="memberForm" ng-show="attendance.editMode">
           <form class="form-horizontal">
               <div class="col-md-12 col-sm-12">
@@ -41,7 +43,7 @@
                 -->
                 <div class="form-group" class="col-sm-12 col-xs-12">
                   <div>
-                    <label id="inputMenber" for="inputMenberName" class="control-label custom-label1">名前</label><br>
+                    <label for="inputMenberName" class="control-label custom-label1">名前</label><br>
                   </div>
                   <div>
                     <input type="text" ng-model="attendance.memberData.name" class="form-control" id="inputMenberName" placeholder="名前" required>
@@ -56,7 +58,7 @@
                   </div>
                   <div ng-repeat="arr in attendance.memberData.choiceSet" style="padding-right: 0px; margin-bottom: 3px;">
                     <font size="-1">{{arr.date}}</font>
-                    <font face="miryo"><b>
+                    <font face="meiryo"><b>
                       <label class="btn btn-choices" ng-model="arr.choice" btn-radio="'○'">○</label>
                       <label class="btn btn-choices" ng-model="arr.choice" btn-radio="'△'">△</label>
                       <label class="btn btn-choices" ng-model="arr.choice" btn-radio="'×'">×</label>
@@ -77,15 +79,15 @@
 
             </div>
           </form>
+    <div class="col-md-12">
+      <div align="center" ng-show="attendance.editMode">
+        <button type="submit" class="green-ball"  scroll-to="memberList" callback-before="attendance.submitMember()" callback-after="attendance.refreshMemberList()">更新する</button>
+      </div>
+    </div>
         </div>
       </div>
     </div>
     <div class="col-md-1"></div>
-    <div class="col-md-12">
-      <div align="center" ng-show="attendance.editMode">
-        <button type="submit" class="green-ball" ng-click="attendance.submitMember()">更新する</button>
-      </div>
-    </div>
   </div>
 </section>
 <section id="block2" ng-show="attendance.errorMode">

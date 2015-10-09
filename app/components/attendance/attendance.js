@@ -10,7 +10,7 @@
     .module('rakusuke.components.attendance', ['rakusuke.service.eventdata', 'rakusuke.service.memberdata'])
     .controller('AttendanceController', AttendanceController);
 
-  AttendanceController.$inject = ['$routeParams', '$moment', 'EventdataService', 'MemberdataService'];
+  AttendanceController.$inject = ['$routeParams', '$timeout', '$moment', 'EventdataService', 'MemberdataService'];
 
   /**
    * AttendanceController
@@ -18,9 +18,10 @@
    * @class AttendanceController
    * @constructor
    */
-  function AttendanceController($routeParams, $moment, EventdataService, MemberdataService) {
+  function AttendanceController($routeParams, $timeout, $moment, EventdataService, MemberdataService) {
     console.log('AttendanceController Constructor');
     this.eventId = $routeParams.eventId;
+    this.$timeout = $timeout;
     this.$moment = $moment;
     this.EventdataService = EventdataService;
     this.MemberdataService = new MemberdataService(this.eventId);
@@ -101,7 +102,7 @@
           array.push({id: data[i].id, name: data[i].value.name, choice: parseLineBreaks(data[i].value.choice), comment: data[i].value.comment});
         }
         vm.memberList = array;
-        console.log(vm.memberList);
+        vm.memberCount = data.length;
       })
       .catch(function (e) {
         console.log(e);
@@ -109,29 +110,20 @@
   }
 
   /**
-   * イベント参加者の情報を取得する関数
+   * イベント参加者の情報を参加者情報入力エリアへセットするメソッド
    *
-   * @method getMemberData
+   * @method setMemberData
    * @param {String} id 取得するイベント参加者のID
    */
-  function getMemberData(id) {
-    console.log('AttendanceController getMemberData Method id:', id);
-    var promise = vm.MemberdataService.get(id);
-    promise
-      .then(function (datum) {
-        // initialize memberData
-        var i;
-        var array = [];
-        var choiceArray = parseLineBreaks(datum.value.choice);
-        for (i = 0; i < vm.eventDateArray.length; i++) {
-          var data = {date:vm.eventDateArray[i], choice:choiceArray[i]};
-          array[i] = data;
-        }
-        vm.memberData = {id: id, name: datum.value.name, choiceSet: array, comment: datum.value.comment};
-      })
-      .catch(function (e) {
-        console.log(e);
-      });
+  function setMemberData(member) {
+    console.log('AttendanceController setMemberData Method');
+    var i;
+    var array = [];
+    for (i = 0; i < vm.eventDateArray.length; i++) {
+      var data = {date:vm.eventDateArray[i], choice:member.choice[i]};
+      array[i] = data;
+    }
+    vm.memberData = {id: member.id, name: member.name, choiceSet: array, comment: member.comment};
   }
 
   /**
@@ -141,7 +133,7 @@
    * @param {String} id 取得するイベントのID
    */
   function getEventData(id) {
-    console.log('AttendanceController getEventData Method id:', id);
+    console.log('AttendanceController getEventData Method');
     var promise = vm.EventdataService.get(id);
     promise
       .then(function (datum) {
@@ -175,6 +167,9 @@
     vm.editMode = false;
     vm.errorMode = false;
     vm.initButton = true;
+    vm.memberCount = 0;
+
+    vm.editOffset = offSetDefault;
 
     // initialize eventData
     vm.eventData = '';
@@ -190,25 +185,31 @@
   };
 
   /**
-   * メンバーの出欠情報を保存するメソッド
+   * メンバーの出欠情報を編集出来る状態にするメソッド
    *
-   * @method submitMember
+   * @method editMember
    */
-  AttendanceController.prototype.editMember = function(id) {
-    getMemberData(id);
-    vm.editMode = true;
-    vm.initButton = true;
+  AttendanceController.prototype.editMember = function(member) {
+    this.$timeout(function() {
+      vm.editOffset = offSetDefault;
+      vm.editMode = true;
+      vm.initButton = true;
+      setMemberData(member);
+    });
   };
 
   /**
    * メンバー情報の入力エリアを初期化するメソッド
    *
-   * @method submitMember
+   * @method initMember
    */
-  AttendanceController.prototype.initMember = function(id) {
-    initMemberData();
-    vm.editMode = true;
-    vm.initButton = false;
+  AttendanceController.prototype.initMember = function() {
+    this.$timeout(function() {
+      vm.editOffset = offSetTopAlignment;
+      vm.editMode = true;
+      vm.initButton = false;
+      initMemberData();
+    });
   };
 
   /**
@@ -219,23 +220,32 @@
   AttendanceController.prototype.submitMember = function() {
     console.log('AttendanceController submitMember Method');
     var choice = toStringChoiceArray(vm.memberData.choiceSet);
-    var value = {name: vm.memberData.name, comment: vm.memberData.comment, choice: choice};
+    var name = vm.memberData.name.length === 0 ? '名無しさん' : vm.memberData.name;
+    var value = {name: name, comment: vm.memberData.comment, choice: choice};
     var saveData = {id:vm.memberData.id, value:value};
 
     // メンバーの出欠情報を保存（最大16KByte 全角だと約800文字）
     var promise = vm.MemberdataService.save(saveData);
     promise
       .then(function (datum) {
-        console.log('datum.id:', datum.id);
-        // リスト更新
-        dispMemberList();
-
+        vm.editOffset = offSetDefault;
         vm.editMode = false;
         vm.initButton = true;
       })
       .catch(function (e) {
         console.log(e);
       });
+  };
+
+  /**
+   * イベント参加者リストをリフレッシュする
+   *
+   * @method refreshMemberList
+   */
+  AttendanceController.prototype.refreshMemberList = function() {
+    console.log('AttendanceController refreshMemberList Method');
+    // リスト更新
+    dispMemberList();
   };
   /**
    * Angular ViewModel
@@ -244,4 +254,6 @@
    * @type {Object}
    */
   var vm;
+  var offSetTopAlignment = '-200';
+  var offSetDefault = '60';
 })();
