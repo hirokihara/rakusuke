@@ -220,13 +220,14 @@
     console.log('AttendanceController submitMember Method');
     var choice = toStringChoiceArray(vm.memberData.choiceSet);
     var value = {name: vm.memberData.name, comment: vm.memberData.comment, choice: choice};
-    var saveData = {id:'', value:value};
+    var saveData = {id:vm.memberData.id, value:value};
 
     // メンバーの出欠情報を保存（最大16KByte 全角だと約800文字）
     var promise = vm.MemberdataService.save(saveData);
     promise
       .then(function (datum) {
         console.log('datum.id:', datum.id);
+        // リスト更新
         dispMemberList();
 
         vm.editMode = false;
