@@ -3,44 +3,67 @@
     <form class="form-horizontal">
       <div class="row">
         <div class="col-md-1"></div>
-        <div class="col-md-10" style="border:solid 3px #009900;">
-          <div class="col-md-8 col-md-push-4 col-sm-12" style="border:solid 3px #009900;">
+        <div class="col-md-10">
+          <div class="col-md-8 col-md-push-4 col-sm-12">
             <div class="row">
-                <div class="col-md-6 col-md-push-6 col-sm-12" style="border:solid 3px #009900;">
+                <div class="col-md-6 col-md-push-6 col-sm-12">
 
                   <!--
                   ** カレンダーエリア
                   -->
                   <div class="form-group" class="col-sm-12 col-xs-12">
-                    <div>
-                      <label for="datearea" class="control-label custom-label1">日にち候補</label>
+                    <div class="visible-sm visible-xs">
+                      <label for="datePicker" class="control-label cotrol-label-item-title">日にち候補</label>
+                    </div>
+                    <div class="hidden-sm hidden-xs cotrol-label-item-description">
+                    日付をクリックして日程を追加してください
+                    </div>
+                    <div class="visible-sm visible-xs cotrol-label-item-description">
+                    候補の区切りは改行で判断されます。<br>
+                    例：<br>
+                    10月17日（土） 19:00〜<br>
+                    10月24日（土） 19:00〜<br>
+                    10月31日（土） 19:00〜
                     </div>
                     <div style="display:inline-block; min-height:290px;">
                       <datepicker id="datePicker" ng-model="home.datepicker" min-date="home.minDate" max-date="home.maxDate" show-weeks="false" class="well well-sm" custom-class="home.getDayClass(date, mode)" format-day-title="yyyy年 MM月" ng-click="home.addDate(home.datepicker)"></datepicker>
                     </div>
-                    <textarea id="datearea" ng-model="home.eventData.date" class="form-control visible-sm visible-xs" rows="5"></textarea>
+                    <textarea id="datearea" ng-model="home.eventData.date" class="form-control visible-sm visible-xs" rows="5" placeholder="候補の区切りは改行で判断されます。また、カレンダーをクリックすると日時が入ります。"></textarea>
                   </div>
 
                 </div>
-                <div class="col-md-6 col-md-pull-6 col-sm-12 hidden-sm hidden-xs" style="border:solid 3px #009900;">
+                <div class="col-md-6 col-md-pull-6 col-sm-12 hidden-sm hidden-xs">
 
                   <!--
                   ** 日にちエリア
                   -->
-                  <textarea id="datearea" ng-model="home.eventData.date" class="form-control" rows="5"></textarea>
+                  <div>
+                    <label for="datearea" class="control-label cotrol-label-item-title">日にち候補</label><br>
+                  </div>
+                  <div class="cotrol-label-item-description">
+                  候補の日程・日時を入力してください<br>
+                  候補の区切りは改行で判断されます。<br>
+                  例：<br>
+                  10月17日（土） 19:00〜<br>
+                  10月24日（土） 19:00〜<br>
+                  10月31日（土） 19:00〜
+                  </div>
+                  <textarea id="datearea" ng-model="home.eventData.date" class="form-control" rows="5" placeholder="候補の区切りは改行で判断されます。また、カレンダーをクリックすると日時が入ります。"></textarea>
 
                 </div>
             </div>
           </div>
-          <div class="col-md-4 col-md-pull-8 col-sm-12" style="border:solid 3px #009900;">
+          <div class="col-md-4 col-md-pull-8 col-sm-12">
 
             <!--
             ** イベント情報エリア
             -->
             <div class="form-group" class="col-sm-12 col-xs-12">
               <div>
-                <label for="inputEventName" class="control-label custom-label1">イベント名</label><br>
-                ※◯◯さんの歓迎会など<br>
+                <label for="inputEventName" class="control-label cotrol-label-item-title">イベント名</label>
+                <div class="cotrol-label-item-description">
+                ※○○ハンズオン開催！！...など
+                </div>
               </div>
               <div>
                 <input type="text" ng-model="home.eventData.title" class="form-control" id="inputEventName" placeholder="イベント名" required>
@@ -48,7 +71,10 @@
             </div>
             <div class="form-group">
               <div>
-                <label for="inputDescription" class="control-label custom-label1">イベント概要<br></label>
+                <label for="inputDescription" class="control-label cotrol-label-item-title">イベント概要<br></label>
+              </div>
+              <div class="cotrol-label-item-description">
+              ※PC持参、ネット回線がないので、テザリングできる事！！...など
               </div>
               <div>
                 <textarea ng-model="home.eventData.description" class="form-control"  id="inputDescription" rows="5"></textarea>
@@ -61,7 +87,7 @@
       </div>
     </form>
     <div class="center-block">
-      <button type="submit" class="btn btn-primary btn-lg col-sm-2 col-sm-offset-5 col-xs-12" ng-click="home.submitEvent()">決定</button>
+      <button type="submit" class="btn btn-lg btn-primary btn-green col-sm-2 col-sm-offset-5 col-xs-12" ng-click="home.submitEvent()">決定</button>
     </div>
   </div>
 </section>

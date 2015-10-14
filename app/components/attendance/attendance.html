@@ -7,11 +7,11 @@
     <div class="col-md-10">
       <div style="overflow: auto;">
         <div>
-          <label class="control-label custom-label1">{{attendance.eventData.title}}</label>
+          <label class="control-label cotrol-label-event-title">{{attendance.eventData.title}}出席確認</label>
         </div>
         <div class="form-group">
           <div>
-            <label for="inputDescription" class="control-label custom-label1">イベント概要<br></label>
+            <label for="inputDescription" class="control-label cotrol-label-item-title">イベント概要<br></label>
           </div>
           <div>
             <textarea ng-model="attendance.eventData.description" class="form-control" id="inputDescription" rows="5" readonly></textarea>
@@ -43,7 +43,7 @@
                 -->
                 <div class="form-group" class="col-sm-12 col-xs-12">
                   <div>
-                    <label for="inputMenberName" class="control-label custom-label1">名前</label><br>
+                    <label for="inputMenberName" class="control-label cotrol-label-item-title">名前</label><br>
                   </div>
                   <div>
                     <input type="text" ng-model="attendance.memberData.name" class="form-control" id="inputMenberName" placeholder="名前" required>
@@ -54,7 +54,7 @@
                 -->
                 <div class="form-group">
                   <div>
-                    <label class="control-label custom-label1">日にち<br></label>
+                    <label class="control-label cotrol-label-item-title">日にち<br></label>
                   </div>
                   <div ng-repeat="arr in attendance.memberData.choiceSet" style="padding-right: 0px; margin-bottom: 3px;">
                     <font size="-1">{{arr.date}}</font>
@@ -70,7 +70,7 @@
                 -->
                 <div class="form-group" class="col-sm-12 col-xs-12">
                   <div>
-                    <label for="inputComment" class="control-label custom-label1">コメント</label><br>
+                    <label for="inputComment" class="control-label cotrol-label-item-title">コメント</label><br>
                   </div>
                   <div>
                     <input type="text" ng-model="attendance.memberData.comment" class="form-control" id="inputComment" placeholder="コメント" required>

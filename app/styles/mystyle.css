@@ -1,71 +1,93 @@
+.container-fluid {
+  background-color: limegreen;
+}
+
+.navbar-default .navbar-brand {
+  color: white;
+  font-size: 23px;
+}
+
 .btn-sm {
-    padding: 2px 8px;
-    font-size: 18px;
-    line-height: 1.5;
-    border-radius: 3px;
+  padding: 2px 8px;
+  font-size: 18px;
+  line-height: 1.5;
+  border-radius: 3px;
 }
 
 .btn-default.disabled, .btn-default[disabled], fieldset[disabled] .btn-default, .btn-default.disabled:hover, .btn-default[disabled]:hover, fieldset[disabled] .btn-default:hover, .btn-default.disabled:focus, .btn-default[disabled]:focus, fieldset[disabled] .btn-default:focus, .btn-default.disabled:active, .btn-default[disabled]:active, fieldset[disabled] .btn-default:active, .btn-default.disabled.active, .btn-default[disabled].active, fieldset[disabled] .btn-default.active {
-    background-color: #CCE0FF;
-    border-color: #CCE0FF;
+  background-color: #CCE0FF;
+  border-color: #CCE0FF;
 }
 
 .btn-choices {
-    background-color: #eee;
-    border-color: #aaa;
+  background-color: #eee;
+  border-color: #aaa;
 }
 
 .green-ball {
   border-radius:100px;
-  color:rgb(255, 255, 255);
+  color: white;
   width:185px;
   height:185px;
-  border-color:rgba(12, 255, 8, 0);
+  border-width: 0px;
   font-size:30px;
-  background-color:rgb(64, 158, 43);
+  /*background-color:rgb(64, 158, 43);*/
+  background-color: limegreen;
   margin-top: 30px;
   margin-bottom: 50px;
 }
 
+.btn-green {
+  background-color: limegreen;
+  font-size: 23px;
+}
+
 .btn:active, .btn.active {
-    background-color: #00FF68;
-    border-color: #aaa;
+  background-color: #00FF68;
+  border-color: #aaa;
 }
 
 .well {
-	background-color: #CCE0FF;
+  background-color: #CCE0FF;
 }
 
 .btn-default:hover {
-    color: #333;
-    background-color: #fff;
-    border-color: #ccc;
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
 }
 
-.custom-title {
-    background-color: #CCE0FF;
-    font-size: 18px;
-    vertical-align: middle;
-    padding: 2px 8px;
+.cotrol-label-event-title {
+  font-size: 23px;
+  vertical-align: middle;
+  padding: 10px 20px;
+  color: white;
+  background-color:rgb(92, 92, 92);
+  margin-bottom: 15px;
 }
 
-.custom-label1 {
-    background-color: #CCE0FF;
-    font-size: 18px;
-    vertical-align: middle;
-    padding: 2px 8px;
+.cotrol-label-item-title {
+  font-size: 18px;
+  vertical-align: middle;
+  padding: 5px 10px;
+  border-left:8px solid #999;
+}
+
+.cotrol-label-item-description {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .full button span {
-	background-color: limegreen;
-	border-radius: 32px;
-	width: 40px;
-	color: black;
+  background-color: limegreen;
+  border-radius: 32px;
+  width: 40px;
+  color: black;
 }
 .partially button span {
-	background-color: orange;
-	border-radius: 32px;
-	color: black;
+  background-color: orange;
+  border-radius: 32px;
+  color: black;
 }
 
 .row-0 {
