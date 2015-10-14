@@ -16,8 +16,6 @@
       'smoothScroll',
       'rakusuke.components.home',
       'rakusuke.components.attendance',
-      'rakusuke.components.about',
-      'rakusuke.components.contact',
       'rakusuke.components.eventlist'
     ])
     .controller('AppController', AppController);
@@ -26,8 +24,6 @@
     {path: '/',       redirectTo: '/home'},
     {path: '/home',    component: 'home'},
     {path: '/attendance/:eventId',    component: 'attendance'},
-    {path: '/about',   component: 'about'},
-    {path: '/contact', component: 'contact'},
     {path: '/eventlist', component: 'eventlist'}
   ];
 

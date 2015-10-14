@@ -30,9 +30,7 @@ module.exports = function(config) {
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       // injector:js
-      'app/components/about/about.js',
       'app/components/attendance/attendance.js',
-      'app/components/contact/contact.js',
       'app/components/eventlist/eventlist.js',
       'app/components/home/home.js',
       'app/scripts/config.js',
