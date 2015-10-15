@@ -132,4 +132,13 @@
   padding-left: 20px;
 }
 
+html {
+  color: #373737;
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
 
+body {
+  font-family: /*"Lucida Grande", "Lucida Sans Unicode", "ヒラギノ丸ゴ Pro W4","Hiragino Maru Gothic Pro", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", Helvetica, Arial, Verdana, sans-serif;*/ "ヒラギノ角ゴ Pro W3", Tahoma;
+}
