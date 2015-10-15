@@ -10,7 +10,7 @@
     .module('rakusuke.components.home', ['rakusuke.service.eventdata', 'rakusuke.service.memberdata'])
     .controller('HomeController', HomeController);
 
-  HomeController.$inject = ['$moment', 'EventdataService', 'MemberdataService'];
+  HomeController.$inject = ['$moment', '$location', 'EventdataService', 'MemberdataService'];
 
   /**
    * HomeController
@@ -18,9 +18,10 @@
    * @class HomeController
    * @constructor
    */
-  function HomeController($moment, EventdataService, MemberdataService) {
+  function HomeController($moment, $location, EventdataService, MemberdataService) {
     console.log('HomeController Constructor');
     this.$moment = $moment;
+    this.$location = $location;
     this.EventdataService = EventdataService;
     this.MemberdataService = MemberdataService;
 
@@ -56,7 +57,7 @@
     console.log('HomeController activate Method');
     vm = this;
     vm.creationSuccess = false;
-    vm.eventId = '';
+    vm.attendanceUrl = '';
 
     // initialize datepicker
     vm.datepicker = new Date();
@@ -126,7 +127,8 @@
     var promise = vm.EventdataService.save(saveData);
     promise
       .then(function (datum) {
-        vm.eventId = datum.id;
+        // 出欠入力ページへのリンクを生成
+        vm.attendanceUrl = vm.$location.absUrl().replace('/home', '/') + 'attendance/' + datum.id;
         vm.creationSuccess = true;
       })
       .catch(function (e) {

@@ -40,6 +40,7 @@
 .btn-green {
   background-color: limegreen;
   font-size: 23px;
+  border-width: 0px;
 }
 
 .btn:active, .btn.active {

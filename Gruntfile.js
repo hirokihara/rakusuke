@@ -35,6 +35,30 @@ module.exports = function (grunt) {
         '**/*',
         '**/.*'
       ]
+    },
+    copy: {
+      fonts: {
+        expand: true,
+        cwd: 'bower_components/bootstrap/fonts/',
+        src: '**',
+        dest: 'dist/fonts/',
+      },
+    },
+    replace: {
+      deploy: {
+        options: {
+          patterns: [
+            {
+              match: '<base href="/">',
+              replacement: '<base href="http://hirokihara.github.io/e-wish-demo2/">'
+            }
+          ],
+          usePrefix: false
+        },
+        files: [
+          {expand: true, flatten: true, src: ['dist/index.html'], dest: 'dist/'}
+        ]
+      }
     }
   };
 
@@ -111,6 +135,7 @@ module.exports = function (grunt) {
     'cssmin',
     'uglify',
     'copy:dist',
+    'copy:fonts',
     'filerev',
     'usemin',
     'htmlmin'
@@ -136,7 +161,6 @@ module.exports = function (grunt) {
     'protractor:accept'
   ]);
 
-
   grunt.registerTask('metric', function (target) {
     if (target === 'test') {
       return grunt.task.run([
@@ -150,5 +174,11 @@ module.exports = function (grunt) {
       'browserSync:metricApp'
     ]);
   });
+
+  grunt.registerTask('gh-deploy', [
+    'build',
+    'replace:deploy',
+    'gh-pages'
+  ]);
 
 };
