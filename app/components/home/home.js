@@ -75,30 +75,30 @@
    */
   HomeController.prototype.getDayClass = function(date, mode) {
     console.log('HomeController getDayClass Method');
-    var tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    var afterTomorrow = new Date();
-    afterTomorrow.setDate(tomorrow.getDate() + 2);
-    var events =
-    [
-      {
-        date: tomorrow,
-        status: 'full'
-      },
-      {
-        date: afterTomorrow,
-        status: 'partially'
-      }
-    ];
-    if (mode === 'day') {
-      var dayToCheck = new Date(date).setHours(0, 0, 0, 0);
-      for (var i = 0; i < events.length; i++) {
-        var currentDay = new Date(events[i].date).setHours(0, 0, 0, 0);
-        if (dayToCheck === currentDay) {
-          return events[i].status;
-        }
-      }
-    }
+    // var tomorrow = new Date();
+    // tomorrow.setDate(tomorrow.getDate() + 1);
+    // var afterTomorrow = new Date();
+    // afterTomorrow.setDate(tomorrow.getDate() + 2);
+    // var events =
+    // [
+    //   {
+    //     date: tomorrow,
+    //     status: 'full'
+    //   },
+    //   {
+    //     date: afterTomorrow,
+    //     status: 'partially'
+    //   }
+    // ];
+    // if (mode === 'day') {
+    //   var dayToCheck = new Date(date).setHours(0, 0, 0, 0);
+    //   for (var i = 0; i < events.length; i++) {
+    //     var currentDay = new Date(events[i].date).setHours(0, 0, 0, 0);
+    //     if (dayToCheck === currentDay) {
+    //       return events[i].status;
+    //     }
+    //   }
+    // }
     return '';
   };
 
