@@ -35,7 +35,7 @@
     // 'remove': {method: 'DELETE'},
     // 'delete': {method: 'DELETE'}
     return function(storename, eventId) {
-      this.milkcocoa = new MilkCocoa('postiecel9pz.mlkcca.com');
+      this.milkcocoa = new MilkCocoa('seaigrszqjz.mlkcca.com');
       if (eventId) {
         this.ds = this.milkcocoa.dataStore(storename).child(eventId);
       } else {
