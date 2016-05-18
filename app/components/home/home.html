@@ -1,5 +1,5 @@
 <div id="scroll-target"></div>
-<section id="block1" ng-hide="home.creationSuccess">
+<section id="block1" ng-hide="home.creationSuccess || home.updateSuccess">
   <div id="eventCreationForm">
     <form class="form-horizontal">
       <div class="row">
@@ -88,7 +88,7 @@
       </div>
     </form>
     <div class="center-block">
-      <button type="submit" scroll-to="scroll-target" callback-before="home.submitEvent()" offset="0" class="btn btn-lg btn-primary btn-green col-sm-2 col-sm-offset-5 col-xs-12">決定</button>
+      <button type="submit" scroll-to="scroll-target" callback-before="home.submitEvent()" offset="0" class="btn btn-lg btn-primary btn-green col-sm-2 col-sm-offset-5 col-xs-12">{{home.saveWord}}</button>
     </div>
   </div>
 </section>
@@ -99,4 +99,8 @@
   <a href="{{home.attendanceUrl}}">{{home.attendanceUrl}}</a>
 </section>
 
+<section id="block2" ng-show="home.updateSuccess">
+<br><br>
+イベント情報を更新しました。
+</section>
 

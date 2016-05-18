@@ -23,6 +23,7 @@
   AppController.$routeConfig = [
     {path: '/',       redirectTo: '/home'},
     {path: '/home',    component: 'home'},
+    {path: '/home/:eventId',    component: 'home'},
     {path: '/attendance/:eventId',    component: 'attendance'},
     {path: '/eventlist', component: 'eventlist'}
   ];

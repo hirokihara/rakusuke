@@ -10,7 +10,7 @@
     .module('rakusuke.components.eventlist', ['rakusuke.service.eventdata'])
     .controller('EventlistController', EventlistController);
 
-  EventlistController.$inject = ['EventdataService'];
+  EventlistController.$inject = ['EventdataService', '$location'];
 
   /**
    * EventlistController
@@ -18,9 +18,10 @@
    * @class EventlistController
    * @constructor
    */
-  function EventlistController(EventdataService) {
+  function EventlistController(EventdataService, $location) {
     console.log('EventlistController Constructor');
     this.EventdataService = EventdataService;
+    this.$location = $location;
   }
 
   function read() {
@@ -45,6 +46,11 @@
     vm = this;
     read();
     // vm.EventdataService.on('push', read);
+  };
+  EventlistController.prototype.edit = function(id) {
+    console.log('EventlistController edit Method id:', id);
+    var homeUrl = vm.$location.absUrl().replace('/eventlist/', '/').replace('/eventlist', '/') + 'home/' + id;
+    window.location.href = homeUrl;
   };
   EventlistController.prototype.remove = function(id) {
     console.log('EventlistController remove Method id:', id);
