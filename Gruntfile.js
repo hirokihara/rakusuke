@@ -28,7 +28,7 @@ module.exports = function (grunt) {
         base: 'dist',
         user: {
           name: 'hirokihara',
-          email: 'benzoumk2@gmail.com'
+          email: 'kiharahiroki.1980@gmail.com'
         }
       },
       src: [
@@ -50,7 +50,7 @@ module.exports = function (grunt) {
           patterns: [
             {
               match: '<base href="/">',
-              replacement: '<base href="http://hirokihara.github.io/e-wish-demo2/">'
+              replacement: '<base href="http://hirokihara.github.io/rakusuke/">'
             }
           ],
           usePrefix: false
