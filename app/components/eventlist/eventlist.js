@@ -47,6 +47,11 @@
     read();
     // vm.EventdataService.on('push', read);
   };
+  EventlistController.prototype.showDetail = function(id) {
+    console.log('EventlistController showDetail Method id:', id);
+    var homeUrl = vm.$location.absUrl().replace('/eventlist/', '/').replace('/eventlist', '/') + 'attendance/' + id;
+    window.location.href = homeUrl;
+  };
   EventlistController.prototype.edit = function(id) {
     console.log('EventlistController edit Method id:', id);
     var homeUrl = vm.$location.absUrl().replace('/eventlist/', '/').replace('/eventlist', '/') + 'home/' + id;

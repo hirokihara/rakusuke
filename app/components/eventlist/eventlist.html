@@ -6,6 +6,7 @@
   <ul ng-repeat="data in eventlist.schedule">
    <li>
      {{data.id}}: {{data.value.title}}: {{data.value.description}}
+     <button ng-click="eventlist.showDetail(data.id)">詳細</button>
      <button ng-click="eventlist.edit(data.id)">修正</button>
      <button ng-click="eventlist.remove(data.id)">削除</button>
    </li>
