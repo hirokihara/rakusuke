@@ -84,7 +84,9 @@
     vm.attendanceUrl = '';
 
     // initialize datepicker
-    vm.datepicker = new Date();
+    // vm.datepicker = new Date();
+    vm.datepicker = '';
+    vm.lastDate = '';
     vm.minDate = this.minDate ? null : new Date();
     vm.maxDate = new Date(2020, 5, 22);
 
@@ -142,7 +144,10 @@
    */
   HomeController.prototype.addDate = function(date) {
     console.log('HomeController addDate Method');
-    vm.eventData.date = vm.eventData.date + vm.$moment (date).format('MM月DD日（ddd） 19:00〜') + '\n';
+    if (date !== vm.lastDate) {
+      vm.eventData.date = vm.eventData.date + vm.$moment(date).format('MM月DD日（ddd） 19:00〜') + '\n';
+      vm.lastDate = date;
+    }
   };
 
   /**
