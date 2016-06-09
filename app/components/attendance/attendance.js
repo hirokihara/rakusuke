@@ -10,7 +10,7 @@
     .module('rakusuke.components.attendance', ['rakusuke.service.eventdata', 'rakusuke.service.memberdata'])
     .controller('AttendanceController', AttendanceController);
 
-  AttendanceController.$inject = ['$routeParams', '$timeout', '$moment', 'EventdataService', 'MemberdataService'];
+  AttendanceController.$inject = ['$routeParams', '$timeout', '$moment', 'EventdataService', 'MemberdataService', '$location'];
 
   /**
    * AttendanceController
@@ -18,13 +18,14 @@
    * @class AttendanceController
    * @constructor
    */
-  function AttendanceController($routeParams, $timeout, $moment, EventdataService, MemberdataService) {
+  function AttendanceController($routeParams, $timeout, $moment, EventdataService, MemberdataService, $location) {
     console.log('AttendanceController Constructor');
     this.eventId = $routeParams.eventId;
     this.$timeout = $timeout;
     this.$moment = $moment;
     this.EventdataService = EventdataService;
     this.MemberdataService = new MemberdataService(this.eventId);
+    this.$location = $location;
   }
 
   /**
@@ -182,6 +183,8 @@
     } else {
       vm.errorMode = true;
     }
+
+    vm.homeURL = vm.$location.absUrl().replace('/attendance/', '/home/').replace('/attendance', '/home');
   };
 
   /**

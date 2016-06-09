@@ -95,6 +95,7 @@
     // initialize eventData
     if (vm.eventId) {
       getEventData(vm.eventId);
+      vm.attendanceUrl = vm.$location.absUrl().replace('/home/', '/attendance/').replace('/home', '/attendance');
       vm.saveWord = '更新';
     } else {
       vm.eventData = {title: '', description: '', choices: '◯\n△\n×', date: ''};
