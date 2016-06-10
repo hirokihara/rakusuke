@@ -7,10 +7,10 @@
   'use strict';
 
   angular
-    .module('rakusuke.components.attendance', ['rakusuke.service.eventdata', 'rakusuke.service.memberdata'])
+    .module('rakusuke.components.attendance', ['rakusuke.service.eventdata', 'rakusuke.service.memberdata', 'rakusuke.components.modal'])
     .controller('AttendanceController', AttendanceController);
 
-  AttendanceController.$inject = ['$routeParams', '$timeout', '$moment', 'EventdataService', 'MemberdataService', '$location'];
+  AttendanceController.$inject = ['$routeParams', '$timeout', '$moment', 'EventdataService', 'MemberdataService', '$location', '$controller'];
 
   /**
    * AttendanceController
@@ -18,7 +18,7 @@
    * @class AttendanceController
    * @constructor
    */
-  function AttendanceController($routeParams, $timeout, $moment, EventdataService, MemberdataService, $location) {
+  function AttendanceController($routeParams, $timeout, $moment, EventdataService, MemberdataService, $location, $controller) {
     console.log('AttendanceController Constructor');
     this.eventId = $routeParams.eventId;
     this.$timeout = $timeout;
@@ -26,6 +26,13 @@
     this.EventdataService = EventdataService;
     this.MemberdataService = new MemberdataService(this.eventId);
     this.$location = $location;
+
+    var self = this;
+    var ModalController = $controller('ModalController', {
+      self: self
+    });
+    angular.extend(this, ModalController);
+    this.ModalController = ModalController;
   }
 
   /**
@@ -193,6 +200,14 @@
    * @method editMember
    */
   AttendanceController.prototype.editMember = function(member) {
+    var modalInstance = this.ModalController.open();
+    // modalInstance.result.then(function() {
+    //   // $scope.message = 'closeが実行されました。';
+    //   console.log('close!!!');
+    // }, function() {
+    //   // $scope.message = 'dismissが実行されました。';
+    //   console.log('dismiss!!!');
+    // });
     this.$timeout(function() {
       vm.editOffset = offSetDefault;
       vm.editMode = true;

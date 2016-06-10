@@ -31,6 +31,7 @@ module.exports = function(config) {
       // endbower
       // injector:js
       'app/components/attendance/attendance.js',
+      'app/components/attendance/modal.js',
       'app/components/eventlist/eventlist.js',
       'app/components/home/home.js',
       'app/scripts/config.js',
